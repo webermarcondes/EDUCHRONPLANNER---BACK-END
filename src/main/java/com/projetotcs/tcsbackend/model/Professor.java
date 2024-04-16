@@ -1,17 +1,49 @@
 package com.projetotcs.tcsbackend.model;
 
+
 import java.util.List;
 
+import jakarta.persistence.Column;
+import jakarta.persistence.Entity;
+import jakarta.persistence.GeneratedValue;
+import jakarta.persistence.GenerationType;
+import jakarta.persistence.Id;
+import jakarta.persistence.JoinColumn;
+import jakarta.persistence.JoinTable;
+import jakarta.persistence.ManyToMany;
+import jakarta.persistence.Table;
 
-//@Entity(name= professor)
+
+@Entity
+@Table(name="professor")
 public class Professor {
    
-
+    @Id
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
+
+    @Column(nullable=false)
     private String nomeCompleto;
+
+    @Column()
     private String telefone;
-    private Integer qtdeDeDiasLecionaveis;
-    private List<String> disponibilidadeNaSemana;
+    
+    @ManyToMany
+    @JoinTable(name="professor_disponibilidade",
+                joinColumns = @JoinColumn(name= "professor_id"),
+                inverseJoinColumns = @JoinColumn(name="DiaDisponivelNaSemana_id"))
+    private List<DiaDisponivelNaSemana> diasDisponiveisnaSemana;
+
+    @Column()
+    private Integer qtdeDiasDeAula;
+    
+
+    @Column()
+    private byte[] fotoPerfil;
+
+    /*@Column()
+    private Status status;*/
+
 
 
     public Long getId() {
@@ -37,22 +69,33 @@ public class Professor {
         this.telefone = telefone;
     }
 
-    public Integer getQtdeDeDiasLecionaveis() {
-        return qtdeDeDiasLecionaveis;
+
+    public Integer getQtdeDiasDeAula() {
+        return qtdeDiasDeAula;
     }
-    public void setQtdeDeDiasLecionaveis(Integer qtdeDeDiasLecionaveis) {
-        this.qtdeDeDiasLecionaveis = qtdeDeDiasLecionaveis;
+    public void setQtdeDiasDeAula(Integer qtdeDiasDeAula) {
+        this.qtdeDiasDeAula = qtdeDiasDeAula;
     }
 
-    public List<String> getDisponibilidadeNaSemana() {
-        return disponibilidadeNaSemana;
+    
+    public List<DiaDisponivelNaSemana> getDiasDisponiveisnaSemana() {
+        return diasDisponiveisnaSemana;
     }
-    public void setDisponibilidadeNaSemana(List<String> disponibilidadeNaSemana) {
-        this.disponibilidadeNaSemana = disponibilidadeNaSemana;
+    public void setDiasDisponiveisnaSemana(List<DiaDisponivelNaSemana> diasDisponiveisnaSemana) {
+        this.diasDisponiveisnaSemana = diasDisponiveisnaSemana;
     }
-   
+
+    
+    public byte[] getFotoPerfil() {
+        return fotoPerfil;
+    }
+    public void setFotoPerfil(byte[] fotoPerfil) {
+        this.fotoPerfil = fotoPerfil;
+    }
 
 
     
+
     
+        
 }
