@@ -3,9 +3,11 @@ package com.projetotcs.tcsbackend.customVOs;
 import java.io.Serializable;
 import java.util.List;
 
+import com.projetotcs.tcsbackend.enums.Status;
 
 
-public class ProfessorVo implements Serializable {
+
+public class ProfessorVoV1 implements Serializable {
 
     private String nomeCompleto;
 
@@ -16,6 +18,8 @@ public class ProfessorVo implements Serializable {
     private Integer qtdeDiasDeAula;
 
     //fotoPerfil;
+
+    private Status status;
 
     public String getNomeCompleto() {
         return nomeCompleto;
@@ -49,6 +53,17 @@ public class ProfessorVo implements Serializable {
     public void setDiasDisponiveisnaSemana(List<DiaDisponivelNaSemanaVo> diasDisponiveisnaSemana) {
         this.diasDisponiveisnaSemana = diasDisponiveisnaSemana;
     }
+
+    public Status getStatus() {
+        return status;
+    }
+
+    public void setStatus(Status status) {
+        this.status = status;
+    }
+
+
+    
 
     
 }

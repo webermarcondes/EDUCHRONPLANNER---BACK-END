@@ -4,9 +4,9 @@ import org.springframework.data.jpa.repository.JpaRepository;
 
 import com.projetotcs.tcsbackend.model.DiaDisponivelNaSemana;
 
-import com.projetotcs.tcsbackend.enums.DiaDaSemana;
+//import com.projetotcs.tcsbackend.enums.DiaDaSemana;
 
 public interface DiaDisponivelNaSemanaRepository  extends JpaRepository<DiaDisponivelNaSemana, Long>{
     
-    DiaDisponivelNaSemana findByDiaDaSemana(DiaDaSemana diaDaSemana);
+    DiaDisponivelNaSemana findByDiaDaSemana(String diaDaSemana);
 }

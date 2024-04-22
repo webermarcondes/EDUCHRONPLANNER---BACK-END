@@ -1,16 +1,23 @@
 package com.projetotcs.tcsbackend.model;
 
 
+/* 
+1	"SEGUNDA-FEIRA"
+2	"TERÇA-FEIRA"
+3	"QUARTA-FEIRA"
+4	"QUINTA-FEIRA"
+5	"SEXTA-FEIRA"
+6	"SÁBADO"
+*/
+
 
 import java.util.List;
 
 import com.fasterxml.jackson.annotation.JsonIgnore;
-import com.projetotcs.tcsbackend.enums.DiaDaSemana;
+//import com.projetotcs.tcsbackend.enums.DiaDaSemana;
 
 import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
-import jakarta.persistence.GeneratedValue;
-import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
 import jakarta.persistence.ManyToMany;
 import jakarta.persistence.Table;
@@ -20,7 +27,6 @@ import jakarta.persistence.Table;
 public class DiaDisponivelNaSemana {
     
     @Id
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
     public Long id;
 
     @ManyToMany(mappedBy="diasDisponiveisnaSemana")
@@ -29,17 +35,23 @@ public class DiaDisponivelNaSemana {
 
 
     @Column()
-    public DiaDaSemana diaDaSemana;
+    public String diaDaSemana;
 
 
-    public DiaDaSemana getDiaDaSemana() {
+    
+
+    public String getDiaDaSemana() {
         return diaDaSemana;
     }
 
 
-    public void setDiaDaSemana(DiaDaSemana diaDaSemana) {
+
+
+    public void setDiaDaSemana(String diaDaSemana) {
         this.diaDaSemana = diaDaSemana;
     }
+
+
 
 
     @Override

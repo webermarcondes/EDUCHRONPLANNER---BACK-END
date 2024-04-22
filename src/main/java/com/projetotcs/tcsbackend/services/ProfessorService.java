@@ -1,13 +1,17 @@
 package com.projetotcs.tcsbackend.services;
 
+import java.util.ArrayList;
 import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.rest.webmvc.ResourceNotFoundException;
 import org.springframework.stereotype.Service;
 
-import com.projetotcs.tcsbackend.customVOs.ProfessorVo;
+import com.projetotcs.tcsbackend.customVOs.DiaDisponivelNaSemanaVo;
+import com.projetotcs.tcsbackend.customVOs.ProfessorVoV1;
+import com.projetotcs.tcsbackend.customVOs.ProfessorVoV2;
 import com.projetotcs.tcsbackend.customVOsConverter.ProfessorVoConverter;
+import com.projetotcs.tcsbackend.model.DiaDisponivelNaSemana;
 import com.projetotcs.tcsbackend.model.Professor;
 import com.projetotcs.tcsbackend.repository.ProfessorRepository;
 
@@ -17,40 +21,73 @@ public class ProfessorService {
     @Autowired
     ProfessorRepository repository;
 
-    public List<Professor> findAll() {
-        return repository.findAll();
+    @Autowired
+    DiaDisponivelNaSemanaService diaDisponivelNaSemanaService;
+
+    public List<ProfessorVoV1> findAll() {
+        return ProfessorVoConverter.professoresToProfessoresVo(repository.findAll());  
     }
 
-    public Professor findById(Long id) {
-        return repository.findById(id)
-        .orElseThrow(() -> new ResourceNotFoundException("Nenhum professor foi encontrado com o ID informado"));} 
-    
+    public ProfessorVoV1 findById(Long id) {
 
-    public Professor create(ProfessorVo professorVo) {
-
-        Professor professor = ProfessorVoConverter.professorVoToProfessor(professorVo);
-
+        Professor professor = repository.findById(id)
+        .orElseThrow(() -> new ResourceNotFoundException("Nenhum professor foi encontrado com o ID informado"));
         
+        return ProfessorVoConverter.professorToProfessorVoV1(professor);  
+    }
 
-        return repository.save(professor);
+    public ProfessorVoV1 create(ProfessorVoV1 professorVo) {
+
+        Professor professor = ProfessorVoConverter.ProfessorVoV1ToProfessor(professorVo);
+        
+        List<DiaDisponivelNaSemana> diasDisponiveisNaSemanaComIds = new ArrayList<>();
+
+        for(DiaDisponivelNaSemana diaDisponivelNaSemanaSemId: professor.getDiasDisponiveisnaSemana()) {
+
+            diasDisponiveisNaSemanaComIds.add(diaDisponivelNaSemanaService.findByDiaDaSemana(
+                                        diaDisponivelNaSemanaSemId.getDiaDaSemana()));
+        }
+  
+        professor.setDiasDisponiveisnaSemana(diasDisponiveisNaSemanaComIds);
+
+        repository.save(professor);
+
+        return professorVo;
 
     }
 
-    public Professor update(Professor professor, Long id) {
+    public ProfessorVoV2 update(ProfessorVoV2 professorVo, Long id) {
 
         var entity = repository.findById(id)
         .orElseThrow(() -> new ResourceNotFoundException("Nenhum professor foi encontrado com o ID informado"));
 
-        entity.setNomeCompleto(professor.getNomeCompleto());
-        entity.setTelefone(professor.getTelefone());
+        List<DiaDisponivelNaSemana> diasDisponiveisNaSemana = new ArrayList<>();
 
-        return repository.save(entity);
+        for(DiaDisponivelNaSemanaVo diaDisponivelNaSemanaVo: professorVo.getDiasDisponiveisnaSemana()) {
+
+            diasDisponiveisNaSemana.add(diaDisponivelNaSemanaService.findByDiaDaSemana(
+                                        diaDisponivelNaSemanaVo.getDiaDaSemana()));
+        }
+
+        entity.setId(id);
+        entity.setNomeCompleto(professorVo.getNomeCompleto());
+        entity.setTelefone(professorVo.getTelefone());
+        entity.setQtdeDiasDeAula(professorVo.getQtdeDiasDeAula());
+        entity.setStatus(professorVo.getStatus());
+        entity.setDiasDisponiveisnaSemana(diasDisponiveisNaSemana);
+        
+        repository.save(entity);
+
+        return professorVo;
 
     }
 
+
+    
+    /* 
     public void delete(Long id) {
 
         repository.deleteById(id);
-    }
+    }*/
 
 }

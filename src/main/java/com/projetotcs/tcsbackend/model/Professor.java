@@ -3,6 +3,8 @@ package com.projetotcs.tcsbackend.model;
 
 import java.util.List;
 
+import com.projetotcs.tcsbackend.enums.Status;
+
 import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
 import jakarta.persistence.GeneratedValue;
@@ -14,6 +16,7 @@ import jakarta.persistence.ManyToMany;
 import jakarta.persistence.Table;
 
 
+/*Falta implementar a foto de perfil*/
 @Entity
 @Table(name="professor")
 public class Professor {
@@ -38,11 +41,11 @@ public class Professor {
     private Integer qtdeDiasDeAula;
     
 
-    @Column()
-    private byte[] fotoPerfil;
-
     /*@Column()
-    private Status status;*/
+    private byte[] fotoPerfil;*/
+
+    @Column()
+    private Status status;
 
 
 
@@ -86,12 +89,26 @@ public class Professor {
     }
 
     
-    public byte[] getFotoPerfil() {
+    /*public byte[] getFotoPerfil() {
         return fotoPerfil;
     }
+
     public void setFotoPerfil(byte[] fotoPerfil) {
         this.fotoPerfil = fotoPerfil;
+    }*/
+
+
+    public Status getStatus() {
+        return status;
     }
+    public void setStatus(Status status) {
+        this.status = status;
+    }
+
+    
+
+
+
 
 
     
