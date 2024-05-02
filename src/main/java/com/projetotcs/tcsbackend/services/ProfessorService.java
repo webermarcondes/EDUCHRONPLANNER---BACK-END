@@ -7,11 +7,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.rest.webmvc.ResourceNotFoundException;
 import org.springframework.stereotype.Service;
 
-import com.projetotcs.tcsbackend.customVOs.DiaDisponivelNaSemanaVo;
-import com.projetotcs.tcsbackend.customVOs.ProfessorVoV1;
-import com.projetotcs.tcsbackend.customVOs.ProfessorVoV2;
-import com.projetotcs.tcsbackend.customVOsConverter.ProfessorVoConverter;
-import com.projetotcs.tcsbackend.model.DiaDisponivelNaSemana;
+import com.projetotcs.tcsbackend.model.DiaDaSemana;
 import com.projetotcs.tcsbackend.model.Professor;
 import com.projetotcs.tcsbackend.repository.ProfessorRepository;
 
@@ -22,63 +18,72 @@ public class ProfessorService {
     ProfessorRepository repository;
 
     @Autowired
-    DiaDisponivelNaSemanaService diaDisponivelNaSemanaService;
+    DiaDaSemanaService diaDaSemanaService;
 
-    public List<ProfessorVoV1> findAll() {
-        return ProfessorVoConverter.professoresToProfessoresVo(repository.findAll());  
+    @Autowired
+    AgendaProfessorService agendaProfessorService;
+
+    public List<Professor> findAll() {
+        //return ProfessorVoConverter.professoresToProfessoresVo(repository.findAll());
+        return repository.findAll();
     }
 
-    public ProfessorVoV1 findById(Long id) {
+    public Professor findById(Long id) {
 
-        Professor professor = repository.findById(id)
+        /*Professor professor = repository.findById(id)
         .orElseThrow(() -> new ResourceNotFoundException("Nenhum professor foi encontrado com o ID informado"));
         
-        return ProfessorVoConverter.professorToProfessorVoV1(professor);  
+        return ProfessorVoConverter.professorToProfessorVoV1(professor); */
+
+        return repository.findById(id)
+                .orElseThrow(() -> new ResourceNotFoundException("Nenhum professor foi encontrado com o ID informado"));
     }
 
-    public ProfessorVoV1 create(ProfessorVoV1 professorVo) {
+    public Professor create(Professor professor) {
+
+        /*List<DiaDaSemanaVo> diasDaSemanaVo = professorVo.getDiasDaSemana();
 
         Professor professor = ProfessorVoConverter.ProfessorVoV1ToProfessor(professorVo);
-        
-        List<DiaDisponivelNaSemana> diasDisponiveisNaSemanaComIds = new ArrayList<>();
-
-        for(DiaDisponivelNaSemana diaDisponivelNaSemanaSemId: professor.getDiasDisponiveisnaSemana()) {
-
-            diasDisponiveisNaSemanaComIds.add(diaDisponivelNaSemanaService.findByDiaDaSemana(
-                                        diaDisponivelNaSemanaSemId.getDiaDaSemana()));
-        }
-  
-        professor.setDiasDisponiveisnaSemana(diasDisponiveisNaSemanaComIds);
+        ProfDiaSemDisc profDiaSemDisc = new ProfDiaSemDisc();*/
 
         repository.save(professor);
 
-        return professorVo;
+        //profDiaSemDisc.setProfessor(professor);
+
+
+        /*for(DiaDaSemanaVo diaDaSemanaSemId: diasDaSemanaVo) {
+
+            profDiaSemDisc.setDiaDaSemana(diaDaSemanaService.findByDescricao(diaDaSemanaSemId.getDescricao()));
+            profDiaSemDiscService.create(profDiaSemDisc);
+        }*/
+
+        return professor;
 
     }
 
-    public ProfessorVoV2 update(ProfessorVoV2 professorVo, Long id) {
+    public Professor update(Professor professor, Long id) {
 
         var entity = repository.findById(id)
         .orElseThrow(() -> new ResourceNotFoundException("Nenhum professor foi encontrado com o ID informado"));
 
-        List<DiaDisponivelNaSemana> diasDisponiveisNaSemana = new ArrayList<>();
+        List<DiaDaSemana> diasDisponiveisNaSemana = new ArrayList<>();
 
-        for(DiaDisponivelNaSemanaVo diaDisponivelNaSemanaVo: professorVo.getDiasDisponiveisnaSemana()) {
+        /*for(DiaDisponivelNaSemanaVo diaDisponivelNaSemanaVo: professorVo.getDiasDisponiveisnaSemana()) {
 
             diasDisponiveisNaSemana.add(diaDisponivelNaSemanaService.findByDiaDaSemana(
                                         diaDisponivelNaSemanaVo.getDiaDaSemana()));
-        }
+        }*/
 
         entity.setId(id);
-        entity.setNomeCompleto(professorVo.getNomeCompleto());
-        entity.setTelefone(professorVo.getTelefone());
-        entity.setQtdeDiasDeAula(professorVo.getQtdeDiasDeAula());
-        entity.setStatus(professorVo.getStatus());
-        entity.setDiasDisponiveisnaSemana(diasDisponiveisNaSemana);
+        entity.setNomeCompleto(professor.getNomeCompleto());
+        entity.setTelefone(professor.getTelefone());
+        entity.setQtdeDiasDeAula(professor.getQtdeDiasDeAula());
+        entity.setStatus(professor.getStatus());
+        //entity.setDiasDisponiveisnaSemana(diasDisponiveisNaSemana);
         
         repository.save(entity);
 
-        return professorVo;
+        return professor;
 
     }
 

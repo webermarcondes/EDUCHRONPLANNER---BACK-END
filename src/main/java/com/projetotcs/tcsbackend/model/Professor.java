@@ -31,11 +31,11 @@ public class Professor {
     @Column()
     private String telefone;
     
-    @ManyToMany
+    /*@ManyToMany
     @JoinTable(name="professor_disponibilidade",
                 joinColumns = @JoinColumn(name= "professor_id"),
                 inverseJoinColumns = @JoinColumn(name="DiaDisponivelNaSemana_id"))
-    private List<DiaDisponivelNaSemana> diasDisponiveisnaSemana;
+    private List<DiaDaSemana> diasDisponiveisnaSemana;*/
 
     @Column()
     private Integer qtdeDiasDeAula;
@@ -81,12 +81,12 @@ public class Professor {
     }
 
     
-    public List<DiaDisponivelNaSemana> getDiasDisponiveisnaSemana() {
+    /*public List<DiaDaSemana> getDiasDisponiveisnaSemana() {
         return diasDisponiveisnaSemana;
     }
-    public void setDiasDisponiveisnaSemana(List<DiaDisponivelNaSemana> diasDisponiveisnaSemana) {
+    public void setDiasDisponiveisnaSemana(List<DiaDaSemana> diasDisponiveisnaSemana) {
         this.diasDisponiveisnaSemana = diasDisponiveisnaSemana;
-    }
+    }*/
 
     
     /*public byte[] getFotoPerfil() {

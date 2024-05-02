@@ -16,7 +16,7 @@ public class ProfessorVoV2 implements Serializable {
 
     private String telefone;
 
-    private List<DiaDisponivelNaSemanaVo> diasDisponiveisnaSemana;
+    private List<DiaDaSemanaVo> diasDaSemanaVo;
 
     private Integer qtdeDiasDeAula;
 
@@ -58,12 +58,12 @@ public class ProfessorVoV2 implements Serializable {
         this.qtdeDiasDeAula = qtdeDiasDeAula;
     }
 
-    public List<DiaDisponivelNaSemanaVo> getDiasDisponiveisnaSemana() {
-        return diasDisponiveisnaSemana;
+    public List<DiaDaSemanaVo> getDiasDaSemanaVo() {
+        return diasDaSemanaVo;
     }
 
-    public void setDiasDisponiveisnaSemana(List<DiaDisponivelNaSemanaVo> diasDisponiveisnaSemana) {
-        this.diasDisponiveisnaSemana = diasDisponiveisnaSemana;
+    public void setDiasDaSemanaVo(List<DiaDaSemanaVo> diasDaSemanaVo) {
+        this.diasDaSemanaVo = diasDaSemanaVo;
     }
 
     public Status getStatus() {

@@ -2,6 +2,7 @@ package com.projetotcs.tcsbackend.controller;
 
 import java.util.List;
 
+import com.projetotcs.tcsbackend.model.Professor;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -24,14 +25,15 @@ Falta implementar uma constraint para impedir que o professor seja deletado;
 
 Falta implementar a foto de perfil no VO e nos converters;
 
-Como fazer o controle via back-end se um dia da semana atribuido a um professor está disponível ou não?
+Definir busca por nome de professor
 
-   - Fazer o controle via tabela de junção de professor e dia da semana?;
-   - Fazer o controle via disciplina vinculada ao professor?
+Definir um atributo unico para o professor, que não seja o ID;
 
-- Deve ser feito um método separado para inativar o professor?
+Verificar se a desativação do professor fica em um metodo separado, ou pode ser no PutMapping
+que já está implementado;
 
 */
+
 @RestController
 @RequestMapping("/api/professor")
 public class ProfessorController {
@@ -40,28 +42,29 @@ public class ProfessorController {
     ProfessorService service;
  
      @GetMapping(value="/")
-     public List<ProfessorVoV1> getProfessores() {
+     public List<Professor> getProfessores() {
         return service.findAll();
         
      }
 
      @GetMapping(value="/{id}")
-     public ProfessorVoV1 getProfessorById(@PathVariable(value="id") Long id) {
+     public Professor getProfessorById(@PathVariable(value="id") Long id) {
         return service.findById(id);
         
      }
 
-     @PostMapping(value="/")
-     public ResponseEntity<ProfessorVoV1> createProfessor(@RequestBody ProfessorVoV1 ProfessorVo) {
 
-        return new ResponseEntity<>(service.create(ProfessorVo), HttpStatus.CREATED);
+     @PostMapping(value="/")
+     public ResponseEntity<Professor> createProfessor(@RequestBody Professor Professor) {
+
+        return new ResponseEntity<>(service.create(Professor), HttpStatus.CREATED);
      }
 
 
      @PutMapping(value="/{id}")
-     public ProfessorVoV2 updateProfessor(@RequestBody ProfessorVoV2 professorVo, @PathVariable Long id) {
+     public Professor updateProfessor(@RequestBody Professor professor, @PathVariable Long id) {
 
-         return service.update(professorVo, id);
+         return service.update(professor, id);
 
      }
 
