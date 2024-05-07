@@ -1,7 +1,10 @@
 package com.projetotcs.tcsbackend.model;
 
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import jakarta.persistence.*;
+
+import java.util.List;
 
 @Entity
 @Table(name="curso")
@@ -17,7 +20,13 @@ public class Curso {
     @Column
     private Integer horasTotais;
 
-    //private Usuario coordenador;
+    @ManyToOne()
+    @JoinColumn(name="usuario_coord_id")
+    private Usuario usuarioCoordenador;
+
+    @OneToMany(mappedBy = "curso")
+    @JsonIgnore
+    private List<Fase> fases;
 
 
     //Verificar viabilidade do Atributo abaixo:
@@ -55,5 +64,21 @@ public class Curso {
 
     public void setQtdeFases(Integer qtdeFases) {
         this.qtdeFases = qtdeFases;
+    }
+
+    public Usuario getUsuarioCoordenador() {
+        return usuarioCoordenador;
+    }
+
+    public void setUsuarioCoordenador(Usuario usuarioCoordenador) {
+        this.usuarioCoordenador = usuarioCoordenador;
+    }
+
+    public List<Fase> getFases() {
+        return fases;
+    }
+
+    public void setFases(List<Fase> fases) {
+        this.fases = fases;
     }
 }

@@ -16,19 +16,30 @@ public class FaseService {
     FaseRepository repository;
 
     public List<Fase> findAll() {
-        return repository.findAll();
+        List<Fase> fases = repository.findAll();
+
+        if (fases.isEmpty()) {
+            throw new ResourceNotFoundException("Não há fases cadastradas");
+        }
+
+        return fases;
     }
 
 
     public Fase findById(Long id) {
 
-        return repository.findById(id)
-                .orElseThrow(() -> new ResourceNotFoundException("Nenhuma fase foi encontrado com o ID informado"));
-
+        return repository.findById(id).orElseThrow(() -> new ResourceNotFoundException("Não há registro de fase com o ID informado"));
     }
 
     public Fase findByNumero(Integer numeroFase) {
-        return repository.findByNumero(numeroFase);
+
+        Fase fase = repository.findByNumero(numeroFase);
+
+        if (fase.getId() == null) {
+            throw new ResourceNotFoundException("Não há registro de fase com o número informado");
+        }
+
+        return fase;
     }
 
     public Fase create(Fase fase) {
@@ -40,10 +51,11 @@ public class FaseService {
     public Fase update(Fase fase, Long id) {
 
         var entity = repository.findById(id)
-                .orElseThrow(() -> new ResourceNotFoundException("Nenhuma fase foi encontrado com o ID informado"));
+                .orElseThrow(() -> new ResourceNotFoundException("Não há registro de fase com o ID informado para atualizar informações"));
 
 
         entity.setNumero(fase.getNumero());
+        entity.setCurso(fase.getCurso());
 
         repository.save(entity);
 

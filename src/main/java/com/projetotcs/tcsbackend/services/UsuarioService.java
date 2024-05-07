@@ -16,13 +16,20 @@ public class UsuarioService {
     UsuarioRepository repository;
 
     public List<Usuario> findAll() {
-        return repository.findAll();
+
+        List<Usuario> usuarios = repository.findAll();
+
+        if(usuarios.isEmpty()) {
+            throw new ResourceNotFoundException("Não há usuários cadastrados");
+        }
+
+        return usuarios;
     }
 
     public Usuario findById(Long id) {
 
         return repository.findById(id)
-                .orElseThrow(() -> new ResourceNotFoundException("Nenhum registro de usuário foi encontrado com o ID informado"));
+                .orElseThrow(() -> new ResourceNotFoundException("Não há registro de usuário com o ID informado"));
 
     }
 
@@ -33,7 +40,7 @@ public class UsuarioService {
     public Usuario update(Usuario usuario, Long id) {
 
         var entity = repository.findById(id)
-                .orElseThrow(() -> new ResourceNotFoundException("Nenhum registro de usuário foi encontrado com o ID informado"));
+                .orElseThrow(() -> new ResourceNotFoundException("Não há registro de usuário com o ID informado para atualizar informações"));
 
         entity.setEmail(usuario.getEmail());
         entity.setNome(usuario.getNome());

@@ -1,6 +1,7 @@
 package com.projetotcs.tcsbackend.controller;
 
 import java.util.List;
+import java.util.Optional;
 
 import com.projetotcs.tcsbackend.model.Professor;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -22,8 +23,6 @@ import com.projetotcs.tcsbackend.services.ProfessorService;
 
 /*
 Falta implementar uma constraint para impedir que o professor seja deletado;
-
-Falta implementar a foto de perfil no VO e nos converters;
 
 Definir busca por nome de professor
 

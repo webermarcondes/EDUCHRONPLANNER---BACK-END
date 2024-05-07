@@ -32,10 +32,6 @@ public class DisciplinaController {
         return service.findById(id);
     }
 
-    @GetMapping(value="/buscaporsala/{numero_sala}")
-    public List<Disciplina> getDisciplinasBySalaNumber(@PathVariable(value="numero_sala") Integer numeroSala) {
-        return service.findByNumeroSala(numeroSala);
-    }
 
     @GetMapping(value="/buscaporfase/{numero_fase}")
     public List<Disciplina> getDisciplinasByFaseNumber(@PathVariable(value="numero_fase") Integer numeroFase) {

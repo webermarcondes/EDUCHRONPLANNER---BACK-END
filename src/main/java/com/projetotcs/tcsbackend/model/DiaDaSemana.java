@@ -16,11 +16,6 @@ public class DiaDaSemana {
     @Id
     public Long id;
 
-    /*@ManyToMany(mappedBy="diasDisponiveisnaSemana")
-    @JsonIgnore  //Ignora a serialização e evita recursão infinita;
-    public List<Professor> professores;*/
-
-
     @Column()
     public String descricao;
 
@@ -40,12 +35,5 @@ public class DiaDaSemana {
     public void setDescricao(String descricao) {
         this.descricao = descricao;
     }
-    
-    
-
-
-    
-
-    
 
 }

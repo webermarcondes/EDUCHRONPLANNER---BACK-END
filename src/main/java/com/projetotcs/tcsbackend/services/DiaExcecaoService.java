@@ -22,7 +22,7 @@ public class DiaExcecaoService {
     public DiaExcecao findById(Long id) {
 
         return repository.findById(id)
-                .orElseThrow(() -> new ResourceNotFoundException("Nenhum registro de dia exceção foi encontrado com o ID informado"));
+                .orElseThrow(() -> new ResourceNotFoundException("Não há registro de dia exceção com o ID informado"));
     }
 
     public DiaExcecao create(DiaExcecao diaExcecao) {
@@ -32,7 +32,7 @@ public class DiaExcecaoService {
     public DiaExcecao update(DiaExcecao diaExcecao, Long id) {
 
         var entity = repository.findById(id)
-                .orElseThrow(() -> new ResourceNotFoundException("Nenhum registro de dia exceção foi encontrado com o ID informado"));
+                .orElseThrow(() -> new ResourceNotFoundException("Não há registro de dia exceção com o ID informado para atualizar informações"));
 
         entity.setData(diaExcecao.getData());
         entity.setMotivo(diaExcecao.getMotivo());

@@ -4,7 +4,6 @@ import com.projetotcs.tcsbackend.repository.DiaDaSemanaRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
-//import com.projetotcs.tcsbackend.enums.DiaDaSemana;
 import com.projetotcs.tcsbackend.model.DiaDaSemana;
 
 @Service

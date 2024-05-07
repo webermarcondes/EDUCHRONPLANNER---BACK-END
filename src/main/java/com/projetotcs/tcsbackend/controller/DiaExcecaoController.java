@@ -12,11 +12,8 @@ import java.util.List;
 
 /*
 
-OS MÉTODOS DESSA CONTROLLER AINDA NÃO FORAM TESTADOS.
-
 - Criar uma Migration para Dia Exceção, para que sejam cadastrados alguns dias no banco de dados;
 
-- Falta criar as rotas pra essa Controller no Postman;
  */
 
 @RestController

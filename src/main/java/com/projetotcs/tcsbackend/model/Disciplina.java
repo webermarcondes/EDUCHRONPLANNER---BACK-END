@@ -21,12 +21,8 @@ public class Disciplina {
     private String codigoCor;
 
     @ManyToOne()
-    @JoinColumn(name = "sala_id")
-    Sala sala;
-
-    @ManyToOne()
     @JoinColumn(name = "fase_id")
-    Fase fase;
+    private Fase fase;
 
 
     public Long getId() {
@@ -59,14 +55,6 @@ public class Disciplina {
 
     public void setCodigoCor(String codigoCor) {
         this.codigoCor = codigoCor;
-    }
-
-    public Sala getSala() {
-        return sala;
-    }
-
-    public void setSala(Sala sala) {
-        this.sala = sala;
     }
 
     public Fase getFase() {

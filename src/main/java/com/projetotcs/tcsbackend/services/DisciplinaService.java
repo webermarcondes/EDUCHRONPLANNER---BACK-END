@@ -22,31 +22,35 @@ public class DisciplinaService {
     FaseService faseService;
 
     public List<Disciplina> findAll() {
-        return repository.findAll();
+
+        List<Disciplina> disciplinas = repository.findAll();
+
+        if(disciplinas.isEmpty()) {
+            throw new ResourceNotFoundException("Não há disciplinas cadastradas");
+        }
+
+        return disciplinas;
     }
 
     public Disciplina findById(Long id) {
 
         return repository.findById(id)
-                .orElseThrow(() -> new ResourceNotFoundException("Nenhum registro de disciplina foi encontrado com o ID informado"));
+                .orElseThrow(() -> new ResourceNotFoundException("Não há registro de disciplina com o ID informado"));
     }
 
-    public List<Disciplina> findByNumeroSala(Integer numeroSala) {
-
-        Long salaId = salaService.findByNumero(numeroSala).getId();
-
-        return repository.findBySalaId(salaId);
-
-
-    }
-
+    //Atualizar método para busca por número fase e curso...
     public List<Disciplina> findByNumeroFase(Integer numeroFase) {
 
         Long faseId = faseService.findByNumero(numeroFase).getId();
 
-        return repository.findByFaseId(faseId);
+        List<Disciplina> disciplinas = repository.findByFaseId(faseId);
 
+        if(disciplinas.isEmpty()) {
+            throw new ResourceNotFoundException("Não há registro de disciplina com o número de fase informado");
 
+        }
+
+        return disciplinas;
     }
 
     public Disciplina create(Disciplina disciplina) {
@@ -56,12 +60,12 @@ public class DisciplinaService {
     public Disciplina update(Disciplina disciplina, Long id) {
 
         var entity = repository.findById(id)
-                .orElseThrow(() -> new ResourceNotFoundException("Nenhuma disciplina foi encontrada com o ID informado"));
+                .orElseThrow(() -> new ResourceNotFoundException("Não há registro de disciplina com o ID informado para atualizar informações"));
 
         entity.setCargaHoraria(disciplina.getCargaHoraria());
         entity.setNome(disciplina.getNome());
         entity.setCodigoCor(disciplina.getCodigoCor());
-        entity.setSala(disciplina.getSala());
+
         entity.setFase(disciplina.getFase());
 
         repository.save(entity);

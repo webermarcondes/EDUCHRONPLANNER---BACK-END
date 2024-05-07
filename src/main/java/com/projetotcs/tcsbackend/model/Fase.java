@@ -1,5 +1,6 @@
 package com.projetotcs.tcsbackend.model;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import jakarta.persistence.*;
 
 import java.util.List;
@@ -16,9 +17,12 @@ public class Fase {
     private Integer numero;
 
     @OneToMany(mappedBy = "fase")
+    @JsonIgnore
     private List<Disciplina> disciplinas;
 
-    //Curso curso;
+    @ManyToOne()
+    @JoinColumn(name="curso_id")
+    private Curso curso;
 
 
     public Long getId() {
@@ -35,5 +39,21 @@ public class Fase {
 
     public void setNumero(Integer numero) {
         this.numero = numero;
+    }
+
+    public List<Disciplina> getDisciplinas() {
+        return disciplinas;
+    }
+
+    public void setDisciplinas(List<Disciplina> disciplinas) {
+        this.disciplinas = disciplinas;
+    }
+
+    public Curso getCurso() {
+        return curso;
+    }
+
+    public void setCurso(Curso curso) {
+        this.curso = curso;
     }
 }

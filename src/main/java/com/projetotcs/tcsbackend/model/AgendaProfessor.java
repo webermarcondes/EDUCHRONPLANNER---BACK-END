@@ -1,9 +1,15 @@
 package com.projetotcs.tcsbackend.model;
 
 
-import com.fasterxml.jackson.annotation.JsonBackReference;
 import jakarta.persistence.*;
 
+
+/*
+A agenda professor deve ser preenchida da seguinte forma:
+
+No cadastro de professor:  professor e dia;
+No cadastro de disciplina: disciplina e sala
+ */
 @Entity
 @Table(name="agendaProfessor")
 public class AgendaProfessor {
@@ -13,7 +19,7 @@ public class AgendaProfessor {
     private Long id;
 
     @ManyToOne()
-    @JoinColumn(name="professor_id", nullable = false)
+    @JoinColumn(name="professor_id")
     private Professor professor;
 
     @ManyToOne()
@@ -23,6 +29,19 @@ public class AgendaProfessor {
     @ManyToOne()
     @JoinColumn(name="disciplina_id")
     private Disciplina disciplina;
+
+
+    @ManyToOne()
+    @JoinColumn(name = "sala_id")
+    private Sala sala;
+
+    public Long getId() {
+        return id;
+    }
+
+    public void setId(Long id) {
+        this.id = id;
+    }
 
     public Professor getProfessor() {
         return professor;
@@ -46,5 +65,13 @@ public class AgendaProfessor {
 
     public void setDisciplina(Disciplina disciplina) {
         this.disciplina = disciplina;
+    }
+
+    public Sala getSala() {
+        return sala;
+    }
+
+    public void setSala(Sala sala) {
+        this.sala = sala;
     }
 }

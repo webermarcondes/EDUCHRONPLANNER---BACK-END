@@ -17,13 +17,19 @@ public class CursoService {
     CursoRepository repository;
 
     public List<Curso> findAll(){
-        return repository.findAll();
+        List<Curso> cursos = repository.findAll();
+
+        if(cursos.isEmpty()) {
+            throw new ResourceNotFoundException("Não há cursos cadastrados");
+        }
+
+        return cursos;
     }
 
     public Curso findById(Long id) {
 
         return repository.findById(id)
-                .orElseThrow(() -> new ResourceNotFoundException("Nenhum registro de curso foi encontrado com o ID informado"));
+                .orElseThrow(() -> new ResourceNotFoundException("Não há registro de curso com o ID informado"));
 
     }
 
@@ -33,8 +39,7 @@ public class CursoService {
 
     public Curso update(Curso curso, Long id) {
 
-        var entity = repository.findById(id)
-                .orElseThrow(() -> new ResourceNotFoundException("Nenhum registro de curso foi encontrado com o ID informado"));
+        var entity = repository.findById(id).orElseThrow(() -> new ResourceNotFoundException("Não há registro de curso com o ID informado para atualizar informações"));
 
         entity.setNome(curso.getNome());
         entity.setHorasTotais(curso.getHorasTotais());

@@ -1,6 +1,7 @@
 package com.projetotcs.tcsbackend.model;
 
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import jakarta.persistence.*;
 
 import java.util.List;
@@ -17,7 +18,8 @@ public class Sala {
     private Integer numero;
 
     @OneToMany(mappedBy = "sala")
-    private List<Disciplina> disciplinas;
+    @JsonIgnore
+    private List<AgendaProfessor> agendaProfessores;
 
     public Long getId() {
         return id;
@@ -34,4 +36,6 @@ public class Sala {
     public void setNumero(Integer numero) {
         this.numero = numero;
     }
+
+
 }

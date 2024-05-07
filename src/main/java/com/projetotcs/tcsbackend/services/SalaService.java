@@ -19,18 +19,30 @@ public class SalaService {
 
     public List<Sala> findAll() {
 
-        return repository.findAll();
+        List<Sala> salas = repository.findAll();
+
+        if(salas.isEmpty()) {
+            throw new ResourceNotFoundException("Não há salas cadastradas");
+        }
+
+        return salas;
     }
 
     public Sala findById(Long id) {
 
         return repository.findById(id)
-                .orElseThrow(() -> new ResourceNotFoundException("Nenhum registro de sala foi encontrado com o ID informado"));
+                .orElseThrow(() -> new ResourceNotFoundException("Não registro de sala com o ID informado"));
     }
 
     public Sala findByNumero(Integer numeroSala) {
 
-        return repository.findByNumero(numeroSala);
+        Sala sala = repository.findByNumero(numeroSala);
+
+        if(sala.getId() == null) {
+            throw new ResourceNotFoundException("Não há registro de sala com o número informado");
+        }
+
+        return sala;
     }
 
     public Sala create(Sala sala) {
@@ -40,7 +52,7 @@ public class SalaService {
     public Sala update(Sala sala, Long id) {
 
         var entity = repository.findById(id)
-                .orElseThrow(() -> new ResourceNotFoundException("Nenhum registro de sala foi encontrado com o ID informado"));
+                .orElseThrow(() -> new ResourceNotFoundException("Não registro de sala com o ID informado para atualizar informações"));
 
         entity.setNumero(sala.getNumero());
 

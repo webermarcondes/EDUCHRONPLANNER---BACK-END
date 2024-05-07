@@ -7,6 +7,7 @@ package com.projetotcs.tcsbackend.controller;
  */
 
 import com.projetotcs.tcsbackend.model.AgendaProfessor;
+import com.projetotcs.tcsbackend.model.Disciplina;
 import com.projetotcs.tcsbackend.services.AgendaProfessorService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
@@ -19,14 +20,26 @@ import java.util.List;
 
 Opçao: Serializar apenas ID em alguns pontos;
 
-Opção: No service, definir a validação se o cadastro do professor existe com outra informação, sem ser
-o ID;
-
-permitir que via service da agendaprofessor seja cadastrado ou atualizado o professor;
 
 Fazer validação de quantidade de aulas antes de atualizar ou vincular;
 
-Verificar viabilidade do método findByDisciplinaId;
+Atender ao RF 41: O sistema irá alertar se uma disciplina não tiver professor definido -> Atendido;
+
+Mesma coisa
+ {
+Verificar RF 38:  O sistema irá alertar o usuário caso ele coloque uma sala com duas disciplinas em um mesmo dia
+
+Verificar RN 05: O sistema não irá permitir que uma sala tenha duas disciplinas no mesmo dia
+}
+
+Verificar RN 06: O sistema não irá permitir que dois professores tenha aula com a mesma disciplina em um dia
+
+
+- Finalizar Validação de Sala e dia iguais -> RF38 e RN05;
+
+- Fazer validação de Disciplinas, dia igual e professores diferentes -> RN06;
+
+
  */
 
 @RestController
@@ -61,6 +74,18 @@ public class AgendaProfessorController {
 
         return service.findByDiaDaSemanaId(diaDaSemanaId);
     }
+
+    @GetMapping(value="/buscaporsala/{numero_sala}")
+    public List<AgendaProfessor> getAgendaProfessorBySalaNumber(@PathVariable(value="numero_sala") Integer numeroSala) {
+        return service.findByNumeroSala(numeroSala);
+    }
+
+
+    @GetMapping(value="/buscapordiasemprofessor/")
+    public List<AgendaProfessor> getAgendaProfessorWhereProfessorIsNull() {
+        return service.findByProfessorIsNull();
+    }
+
 
 
     @PostMapping(value="/")

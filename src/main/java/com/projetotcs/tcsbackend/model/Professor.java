@@ -1,8 +1,6 @@
 package com.projetotcs.tcsbackend.model;
 
 
-import java.util.List;
-
 import com.projetotcs.tcsbackend.enums.Status;
 
 import jakarta.persistence.Column;
@@ -10,9 +8,6 @@ import jakarta.persistence.Entity;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
-import jakarta.persistence.JoinColumn;
-import jakarta.persistence.JoinTable;
-import jakarta.persistence.ManyToMany;
 import jakarta.persistence.Table;
 
 
@@ -30,19 +25,13 @@ public class Professor {
 
     @Column()
     private String telefone;
-    
-    /*@ManyToMany
-    @JoinTable(name="professor_disponibilidade",
-                joinColumns = @JoinColumn(name= "professor_id"),
-                inverseJoinColumns = @JoinColumn(name="DiaDisponivelNaSemana_id"))
-    private List<DiaDaSemana> diasDisponiveisnaSemana;*/
 
     @Column()
     private Integer qtdeDiasDeAula;
     
 
-    /*@Column()
-    private byte[] fotoPerfil;*/
+    @Column()
+    private String urlFotoPerfil;
 
     @Column()
     private Status status;
@@ -80,23 +69,6 @@ public class Professor {
         this.qtdeDiasDeAula = qtdeDiasDeAula;
     }
 
-    
-    /*public List<DiaDaSemana> getDiasDisponiveisnaSemana() {
-        return diasDisponiveisnaSemana;
-    }
-    public void setDiasDisponiveisnaSemana(List<DiaDaSemana> diasDisponiveisnaSemana) {
-        this.diasDisponiveisnaSemana = diasDisponiveisnaSemana;
-    }*/
-
-    
-    /*public byte[] getFotoPerfil() {
-        return fotoPerfil;
-    }
-
-    public void setFotoPerfil(byte[] fotoPerfil) {
-        this.fotoPerfil = fotoPerfil;
-    }*/
-
 
     public Status getStatus() {
         return status;
@@ -105,14 +77,11 @@ public class Professor {
         this.status = status;
     }
 
-    
+    public String getUrlFotoPerfil() {
+        return urlFotoPerfil;
+    }
 
-
-
-
-
-    
-
-    
-        
+    public void setUrlFotoPerfil(String urlFotoPerfil) {
+        this.urlFotoPerfil = urlFotoPerfil;
+    }
 }

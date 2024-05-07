@@ -1,9 +1,12 @@
 package com.projetotcs.tcsbackend.model;
 
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.projetotcs.tcsbackend.enums.NivelPermissao;
 import com.projetotcs.tcsbackend.enums.Status;
 import jakarta.persistence.*;
+
+import java.util.List;
 
 @Entity
 @Table(name="usuario")
@@ -22,13 +25,18 @@ public class Usuario {
     @Column
     private Integer senha;
 
-    //private byte[] fotoPerfil;
+    @Column()
+    private String urlFotoPerfil;
 
     @Column
     private Status status;
 
     @Column
     private NivelPermissao nivelPermissao;
+
+    @OneToMany(mappedBy = "usuarioCoordenador")
+    @JsonIgnore
+    List<Curso> cursos;
 
 
     public Long getId() {
@@ -77,5 +85,21 @@ public class Usuario {
 
     public void setNivelPermissao(NivelPermissao nivelPermissao) {
         this.nivelPermissao = nivelPermissao;
+    }
+
+    public String getUrlFotoPerfil() {
+        return urlFotoPerfil;
+    }
+
+    public void setUrlFotoPerfil(String urlFotoPerfil) {
+        this.urlFotoPerfil = urlFotoPerfil;
+    }
+
+    public List<Curso> getCursos() {
+        return cursos;
+    }
+
+    public void setCursos(List<Curso> cursos) {
+        this.cursos = cursos;
     }
 }
