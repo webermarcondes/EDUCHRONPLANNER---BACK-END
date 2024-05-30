@@ -2,24 +2,25 @@ package com.projetotcs.tcsbackend.model;
 
 
 import com.fasterxml.jackson.annotation.JsonIgnore;
+
 import jakarta.persistence.*;
 
 import java.util.List;
 
 @Entity
 @Table(name="sala")
-public class Sala {
+public class SalaModel {
 
     @Id
     @GeneratedValue(strategy= GenerationType.IDENTITY)
     private Long id;
 
-    @Column()
+    @Column(unique = true)
     private Integer numero;
 
     @OneToMany(mappedBy = "sala")
     @JsonIgnore
-    private List<AgendaProfessor> agendaProfessores;
+    private List<AgendaProfessorModel> agendaProfessor;
 
     public Long getId() {
         return id;
@@ -36,6 +37,7 @@ public class Sala {
     public void setNumero(Integer numero) {
         this.numero = numero;
     }
+
 
 
 }

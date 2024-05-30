@@ -3,21 +3,17 @@ package com.projetotcs.tcsbackend.model;
 
 import jakarta.persistence.*;
 
-import java.util.Date;
-
 @Entity
 @Table(name="diaExcecao")
-public class DiaExcecao {
+public class DiaExcecaoModel {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
-    //Verificar se a Data será de tipos pra datas, ou String..
     @Column
-    private Date data;
+    private String data;
 
-    /*Verificar viabilidade de uso do atributo abaixo: */
     @Column
     private String motivo;
 
@@ -29,11 +25,11 @@ public class DiaExcecao {
         this.id = id;
     }
 
-    public Date getData() {
+    public String getData() {
         return data;
     }
 
-    public void setData(Date data) {
+    public void setData(String data) {
         this.data = data;
     }
 

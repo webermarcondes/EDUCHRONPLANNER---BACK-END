@@ -1,38 +1,22 @@
 package com.projetotcs.tcsbackend.controller;
 
 import java.util.List;
-import java.util.Optional;
 
-import com.projetotcs.tcsbackend.model.Professor;
+import com.projetotcs.tcsbackend.exceptions.StatusInativoException;
+import com.projetotcs.tcsbackend.model.ProfessorModel;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
-import org.springframework.web.bind.annotation.DeleteMapping;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PathVariable;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.PutMapping;
-import org.springframework.web.bind.annotation.RequestBody;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 
-import com.projetotcs.tcsbackend.customVOs.ProfessorVoV1;
-import com.projetotcs.tcsbackend.customVOs.ProfessorVoV2;
+
 import com.projetotcs.tcsbackend.services.ProfessorService;
 
 
 /*
-Falta implementar uma constraint para impedir que o professor seja deletado;
-
-Definir busca por nome de professor
-
-Definir um atributo unico para o professor, que não seja o ID;
-
-Verificar se a desativação do professor fica em um metodo separado, ou pode ser no PutMapping
-que já está implementado;
-
+Fazer validação no update e no create para que não sejá possível cadastrar um usuário com um CPF
+que já está persistido, ou atualizar o CPF de um usuário para um que já está persistido
 */
-
 @RestController
 @RequestMapping("/api/professor")
 public class ProfessorController {
@@ -41,39 +25,46 @@ public class ProfessorController {
     ProfessorService service;
  
      @GetMapping(value="/")
-     public List<Professor> getProfessores() {
+     public List<ProfessorModel> getProfessores() {
         return service.findAll();
         
      }
 
      @GetMapping(value="/{id}")
-     public Professor getProfessorById(@PathVariable(value="id") Long id) {
+     public ProfessorModel getProfessorById(@PathVariable(value="id") Long id) {
         return service.findById(id);
         
      }
 
+     @GetMapping(value="/buscaporcpf/")
+     public ProfessorModel getProfessorByCpf(@RequestBody String cpf) {
+
+
+         return service.findByCpf(cpf);
+     }
+
 
      @PostMapping(value="/")
-     public ResponseEntity<Professor> createProfessor(@RequestBody Professor Professor) {
+     public ResponseEntity<ProfessorModel> createProfessor(@RequestBody ProfessorModel professor) {
 
-        return new ResponseEntity<>(service.create(Professor), HttpStatus.CREATED);
+        return new ResponseEntity<>(service.create(professor), HttpStatus.CREATED);
      }
 
 
      @PutMapping(value="/{id}")
-     public Professor updateProfessor(@RequestBody Professor professor, @PathVariable Long id) {
+     public ProfessorModel updateProfessor(@RequestBody ProfessorModel professor, @PathVariable Long id) throws StatusInativoException {
 
          return service.update(professor, id);
 
      }
 
+     @PatchMapping(value="/atualizarstatus/{id}")
+     public ProfessorModel updateProfessorStatus(@PathVariable Long id, @RequestBody String status) {
+         return service.updateProfessorStatus(id, status);
 
-     /* 
-     @DeleteMapping(value="/{id}")
-     public ResponseEntity<Professor> deleteProfessor(@PathVariable(value= "id") Long id) {
-        service.delete(id);
 
-        return new ResponseEntity<>(null, HttpStatus.NO_CONTENT);
-     }*/
+     }
+
+
     
 }

@@ -12,7 +12,7 @@ No cadastro de disciplina: disciplina e sala
  */
 @Entity
 @Table(name="agendaProfessor")
-public class AgendaProfessor {
+public class AgendaProfessorModel {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -20,20 +20,21 @@ public class AgendaProfessor {
 
     @ManyToOne()
     @JoinColumn(name="professor_id")
-    private Professor professor;
+    private ProfessorModel professor;
 
     @ManyToOne()
     @JoinColumn(name="diaDaSemana_id", nullable=false)
-    private DiaDaSemana diaDaSemana;
+    private DiaDaSemanaModel diaDaSemana;
 
     @ManyToOne()
     @JoinColumn(name="disciplina_id")
-    private Disciplina disciplina;
+    private DisciplinaModel disciplina;
 
 
     @ManyToOne()
     @JoinColumn(name = "sala_id")
-    private Sala sala;
+    private SalaModel sala;
+
 
     public Long getId() {
         return id;
@@ -43,35 +44,35 @@ public class AgendaProfessor {
         this.id = id;
     }
 
-    public Professor getProfessor() {
+    public ProfessorModel getProfessor() {
         return professor;
     }
 
-    public void setProfessor(Professor professor) {
+    public void setProfessor(ProfessorModel professor) {
         this.professor = professor;
     }
 
-    public DiaDaSemana getDiaDaSemana() {
+    public DiaDaSemanaModel getDiaDaSemana() {
         return diaDaSemana;
     }
 
-    public void setDiaDaSemana(DiaDaSemana diaDaSemana) {
+    public void setDiaDaSemana(DiaDaSemanaModel diaDaSemana) {
         this.diaDaSemana = diaDaSemana;
     }
 
-    public Disciplina getDisciplina() {
+    public DisciplinaModel getDisciplina() {
         return disciplina;
     }
 
-    public void setDisciplina(Disciplina disciplina) {
+    public void setDisciplina(DisciplinaModel disciplina) {
         this.disciplina = disciplina;
     }
 
-    public Sala getSala() {
+    public SalaModel getSala() {
         return sala;
     }
 
-    public void setSala(Sala sala) {
+    public void setSala(SalaModel sala) {
         this.sala = sala;
     }
 }

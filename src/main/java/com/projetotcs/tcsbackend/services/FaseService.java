@@ -1,7 +1,7 @@
 package com.projetotcs.tcsbackend.services;
 
 
-import com.projetotcs.tcsbackend.model.Fase;
+import com.projetotcs.tcsbackend.model.FaseModel;
 import com.projetotcs.tcsbackend.repository.FaseRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.rest.webmvc.ResourceNotFoundException;
@@ -15,8 +15,8 @@ public class FaseService {
     @Autowired
     FaseRepository repository;
 
-    public List<Fase> findAll() {
-        List<Fase> fases = repository.findAll();
+    public List<FaseModel> findAll() {
+        List<FaseModel> fases = repository.findAll();
 
         if (fases.isEmpty()) {
             throw new ResourceNotFoundException("Não há fases cadastradas");
@@ -26,29 +26,29 @@ public class FaseService {
     }
 
 
-    public Fase findById(Long id) {
+    public FaseModel findById(Long id) {
 
         return repository.findById(id).orElseThrow(() -> new ResourceNotFoundException("Não há registro de fase com o ID informado"));
     }
 
-    public Fase findByNumero(Integer numeroFase) {
+    public FaseModel findByNumero(Integer numeroFase) {
 
-        Fase fase = repository.findByNumero(numeroFase);
+        FaseModel fase = repository.findByNumero(numeroFase);
 
-        if (fase.getId() == null) {
+        if (fase == null) {
             throw new ResourceNotFoundException("Não há registro de fase com o número informado");
         }
 
         return fase;
     }
 
-    public Fase create(Fase fase) {
+    public FaseModel create(FaseModel fase) {
 
         return repository.save(fase);
     }
 
 
-    public Fase update(Fase fase, Long id) {
+    public FaseModel update(FaseModel fase, Long id) {
 
         var entity = repository.findById(id)
                 .orElseThrow(() -> new ResourceNotFoundException("Não há registro de fase com o ID informado para atualizar informações"));
@@ -59,7 +59,7 @@ public class FaseService {
 
         repository.save(entity);
 
-        return fase;
+        return entity;
     }
 
     public void delete(Long id) {

@@ -7,7 +7,7 @@ import java.util.List;
 
 @Entity
 @Table(name="fase")
-public class Fase {
+public class FaseModel {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -18,11 +18,11 @@ public class Fase {
 
     @OneToMany(mappedBy = "fase")
     @JsonIgnore
-    private List<Disciplina> disciplinas;
+    private List<DisciplinaModel> disciplinas;
 
     @ManyToOne()
     @JoinColumn(name="curso_id")
-    private Curso curso;
+    private CursoModel curso;
 
 
     public Long getId() {
@@ -41,19 +41,19 @@ public class Fase {
         this.numero = numero;
     }
 
-    public List<Disciplina> getDisciplinas() {
+    public List<DisciplinaModel> getDisciplinas() {
         return disciplinas;
     }
 
-    public void setDisciplinas(List<Disciplina> disciplinas) {
+    public void setDisciplinas(List<DisciplinaModel> disciplinas) {
         this.disciplinas = disciplinas;
     }
 
-    public Curso getCurso() {
+    public CursoModel getCurso() {
         return curso;
     }
 
-    public void setCurso(Curso curso) {
+    public void setCurso(CursoModel curso) {
         this.curso = curso;
     }
 }

@@ -1,9 +1,9 @@
 package com.projetotcs.tcsbackend.repository;
 
-import com.projetotcs.tcsbackend.model.Fase;
+import com.projetotcs.tcsbackend.model.FaseModel;
 import org.springframework.data.jpa.repository.JpaRepository;
 
-public interface FaseRepository extends JpaRepository<Fase, Long> {
+public interface FaseRepository extends JpaRepository<FaseModel, Long> {
 
-    Fase findByNumero(Integer numeroFase);
+    FaseModel findByNumero(Integer numeroFase);
 }

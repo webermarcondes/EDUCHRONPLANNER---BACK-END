@@ -10,7 +10,7 @@ import java.util.List;
 
 @Entity
 @Table(name="usuario")
-public class Usuario {
+public class UsuarioModel {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -19,11 +19,14 @@ public class Usuario {
     @Column
     private String nome;
 
+    @Column(unique = true, length = 11)
+    private String cpf;
+
     @Column
     private String email;
 
     @Column
-    private Integer senha;
+    private String senha;
 
     @Column()
     private String urlFotoPerfil;
@@ -36,7 +39,7 @@ public class Usuario {
 
     @OneToMany(mappedBy = "usuarioCoordenador")
     @JsonIgnore
-    List<Curso> cursos;
+    List<CursoModel> cursos;
 
 
     public Long getId() {
@@ -63,11 +66,11 @@ public class Usuario {
         this.email = email;
     }
 
-    public Integer getSenha() {
+    public String getSenha() {
         return senha;
     }
 
-    public void setSenha(Integer senha) {
+    public void setSenha(String senha) {
         this.senha = senha;
     }
 
@@ -95,11 +98,11 @@ public class Usuario {
         this.urlFotoPerfil = urlFotoPerfil;
     }
 
-    public List<Curso> getCursos() {
-        return cursos;
+    public String getCpf() {
+        return cpf;
     }
 
-    public void setCursos(List<Curso> cursos) {
-        this.cursos = cursos;
+    public void setCpf(String cpf) {
+        this.cpf = cpf;
     }
 }

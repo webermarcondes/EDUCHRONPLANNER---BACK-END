@@ -5,7 +5,7 @@ import jakarta.persistence.*;
 
 @Entity
 @Table(name="disciplina")
-public class Disciplina {
+public class DisciplinaModel {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -22,7 +22,7 @@ public class Disciplina {
 
     @ManyToOne()
     @JoinColumn(name = "fase_id")
-    private Fase fase;
+    private FaseModel fase;
 
 
     public Long getId() {
@@ -57,11 +57,11 @@ public class Disciplina {
         this.codigoCor = codigoCor;
     }
 
-    public Fase getFase() {
+    public FaseModel getFase() {
         return fase;
     }
 
-    public void setFase(Fase fase) {
+    public void setFase(FaseModel fase) {
         this.fase = fase;
     }
 }

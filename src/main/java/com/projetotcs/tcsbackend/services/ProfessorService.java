@@ -3,13 +3,16 @@ package com.projetotcs.tcsbackend.services;
 
 import java.util.List;
 
+import com.projetotcs.tcsbackend.enums.Status;
+import com.projetotcs.tcsbackend.exceptions.StatusInativoException;
+import org.json.JSONObject;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.rest.webmvc.ResourceNotFoundException;
 import org.springframework.stereotype.Service;
 
-
-import com.projetotcs.tcsbackend.model.Professor;
+import com.projetotcs.tcsbackend.model.ProfessorModel;
 import com.projetotcs.tcsbackend.repository.ProfessorRepository;
+
 
 @Service
 public class ProfessorService {
@@ -17,9 +20,9 @@ public class ProfessorService {
     @Autowired
     ProfessorRepository repository;
 
-    public List<Professor> findAll() {
+    public List<ProfessorModel> findAll() {
 
-        List<Professor> professores = repository.findAll();
+        List<ProfessorModel> professores = repository.findAll();
 
         if(professores.isEmpty()) {
             throw new ResourceNotFoundException("Não há professores cadastrados");
@@ -28,12 +31,25 @@ public class ProfessorService {
         return professores;
     }
 
-    public Professor findById(Long id) {
+    public ProfessorModel findById(Long id) {
 
         return repository.findById(id).orElseThrow(() -> new ResourceNotFoundException("Não há registro de professor com o ID informado"));
     }
 
-    public Professor create(Professor professor) {
+    public ProfessorModel findByCpf(String cpf) {
+
+        JSONObject jsonString = new JSONObject(cpf);
+
+        ProfessorModel professor = repository.findByCpf(jsonString.getString("cpf"));
+
+        if(professor == null) {
+            throw new ResourceNotFoundException("Não há professor cadastrado com o CPF informado");
+        }
+
+        return professor;
+    }
+
+    public ProfessorModel create(ProfessorModel professor) {
 
         repository.save(professor);
 
@@ -41,27 +57,42 @@ public class ProfessorService {
 
     }
 
-    public Professor update(Professor professor, Long id) {
+    public ProfessorModel update(ProfessorModel professor, Long id) throws StatusInativoException {
 
         var entity = repository.findById(id)
         .orElseThrow(() -> new ResourceNotFoundException("Não há registro de professor com o ID informado para atualizar informações"));
 
-        entity.setId(id);
-        entity.setNomeCompleto(professor.getNomeCompleto());
-        entity.setTelefone(professor.getTelefone());
-        entity.setQtdeDiasDeAula(professor.getQtdeDiasDeAula());
-        entity.setStatus(professor.getStatus());
 
-        repository.save(entity);
+        if(entity.getStatus() == Status.ATIVO) {
+            entity.setNomeCompleto(professor.getNomeCompleto());
+            entity.setTelefone(professor.getTelefone());
+            entity.setQtdeDiasDeAula(professor.getQtdeDiasDeAula());
+            entity.setCpf(professor.getCpf());
+            entity.setUrlFotoPerfil(professor.getUrlFotoPerfil());
 
-        return professor;
+            repository.save(entity);
 
+            return entity;
+        }
+
+        throw new StatusInativoException("Não é possível atualizar dados de um professor INATIVO");
     }
 
-    /* 
-    public void delete(Long id) {
+    public ProfessorModel updateProfessorStatus(Long id, String status) {
 
-        repository.deleteById(id);
-    }*/
+        JSONObject jsonString = new JSONObject(status);
 
+        ProfessorModel professor = repository.findById(id)
+                .orElseThrow(() -> new ResourceNotFoundException("Não há registro de professor com o ID informado para atualizar informações"));
+
+        if (jsonString.getString("status").equals("ATIVO")) {
+            professor.setStatus(Status.ATIVO);
+        }
+        else {
+            professor.setStatus(Status.INATIVO);
+        }
+
+        repository.save(professor);
+        return professor;
+    }
 }

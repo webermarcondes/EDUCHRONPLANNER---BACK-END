@@ -1,7 +1,7 @@
 package com.projetotcs.tcsbackend.services;
 
 
-import com.projetotcs.tcsbackend.model.DiaExcecao;
+import com.projetotcs.tcsbackend.model.DiaExcecaoModel;
 import com.projetotcs.tcsbackend.repository.DiaExcecaoRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.rest.webmvc.ResourceNotFoundException;
@@ -15,21 +15,21 @@ public class DiaExcecaoService {
     @Autowired
     DiaExcecaoRepository repository;
 
-    public List<DiaExcecao> findAll() {
+    public List<DiaExcecaoModel> findAll() {
         return repository.findAll();
     }
 
-    public DiaExcecao findById(Long id) {
+    public DiaExcecaoModel findById(Long id) {
 
         return repository.findById(id)
                 .orElseThrow(() -> new ResourceNotFoundException("Não há registro de dia exceção com o ID informado"));
     }
 
-    public DiaExcecao create(DiaExcecao diaExcecao) {
+    public DiaExcecaoModel create(DiaExcecaoModel diaExcecao) {
         return repository.save(diaExcecao);
     }
 
-    public DiaExcecao update(DiaExcecao diaExcecao, Long id) {
+    public DiaExcecaoModel update(DiaExcecaoModel diaExcecao, Long id) {
 
         var entity = repository.findById(id)
                 .orElseThrow(() -> new ResourceNotFoundException("Não há registro de dia exceção com o ID informado para atualizar informações"));
@@ -39,7 +39,7 @@ public class DiaExcecaoService {
 
         repository.save(entity);
 
-        return diaExcecao;
+        return entity;
     }
 
     public void delete(Long id) {

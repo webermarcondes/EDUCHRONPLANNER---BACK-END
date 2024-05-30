@@ -1,6 +1,6 @@
 package com.projetotcs.tcsbackend.controller;
 
-import com.projetotcs.tcsbackend.model.Fase;
+import com.projetotcs.tcsbackend.model.FaseModel;
 import com.projetotcs.tcsbackend.services.FaseService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
@@ -9,10 +9,6 @@ import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
 
-/*
-Verificar a viabilidade de definir um getMapping para busca de fase por número. No Service
-o método já tá definido, e ele é usado no disciplinaService atualmente
- */
 @RestController
 @RequestMapping("/api/fase")
 public class FaseController {
@@ -21,28 +17,34 @@ public class FaseController {
     FaseService service;
 
     @GetMapping(value="/")
-    public List<Fase> getFases() {
+    public List<FaseModel> getFases() {
         return service.findAll();
     }
 
     @GetMapping(value="/{id}")
-    public Fase getFaseById(@PathVariable(name="id") Long id) {
+    public FaseModel getFaseById(@PathVariable(name="id") Long id) {
         return service.findById(id);
     }
 
+    @GetMapping(value="buscapornumero/{numero_fase}")
+    public FaseModel getFaseByNumero(@PathVariable(name="numero_fase") Integer numeroFase) {
+        return service.findByNumero(numeroFase);
+    }
+
+
     @PostMapping(value="/")
-    public ResponseEntity<Fase> createFase(@RequestBody Fase fase) {
+    public ResponseEntity<FaseModel> createFase(@RequestBody FaseModel fase) {
         return new ResponseEntity<>(service.create(fase), HttpStatus.CREATED);
     }
 
     @PutMapping(value="/{id}")
-    public Fase updateFase(@RequestBody Fase fase, @PathVariable(name="id") Long id) {
+    public FaseModel updateFase(@RequestBody FaseModel fase, @PathVariable(name="id") Long id) {
         return service.update(fase, id);
     }
 
 
     @DeleteMapping(value="/{id}")
-    public ResponseEntity<Fase> deleteFase(@PathVariable(value="id") Long id) {
+    public ResponseEntity<FaseModel> deleteFase(@PathVariable(value="id") Long id) {
 
          service.delete(id);
 

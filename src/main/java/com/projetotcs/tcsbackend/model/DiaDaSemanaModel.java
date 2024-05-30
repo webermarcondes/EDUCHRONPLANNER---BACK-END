@@ -1,9 +1,5 @@
 package com.projetotcs.tcsbackend.model;
 
-
-
-//import com.projetotcs.tcsbackend.enums.DiaDaSemana;
-
 import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
 import jakarta.persistence.Id;
@@ -11,7 +7,7 @@ import jakarta.persistence.Id;
 
 @Entity
 @Table(name="diaDaSemana")
-public class DiaDaSemana {
+public class DiaDaSemanaModel {
     
     @Id
     public Long id;

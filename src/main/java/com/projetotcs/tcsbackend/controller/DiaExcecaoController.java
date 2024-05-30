@@ -1,7 +1,7 @@
 package com.projetotcs.tcsbackend.controller;
 
 
-import com.projetotcs.tcsbackend.model.DiaExcecao;
+import com.projetotcs.tcsbackend.model.DiaExcecaoModel;
 import com.projetotcs.tcsbackend.services.DiaExcecaoService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
@@ -11,11 +11,9 @@ import org.springframework.web.bind.annotation.*;
 import java.util.List;
 
 /*
-
-- Criar uma Migration para Dia Exceção, para que sejam cadastrados alguns dias no banco de dados;
-
+Criar validação para evitar que seja cadastrado no banco um dia que já está persistido, ou que um registro
+Seja atualizado com dados de um dia que já está persistido;
  */
-
 @RestController
 @RequestMapping("/api/diaexcecao")
 public class DiaExcecaoController {
@@ -24,29 +22,29 @@ public class DiaExcecaoController {
     DiaExcecaoService service;
 
     @GetMapping(value="/")
-    public List<DiaExcecao> getDiasExcecao() {
+    public List<DiaExcecaoModel> getDiasExcecao() {
         return service.findAll();
     }
 
     @GetMapping(value="/{id}")
-    public DiaExcecao getDiaExcecaoById(@PathVariable(value="id") Long id) {
+    public DiaExcecaoModel getDiaExcecaoById(@PathVariable(value="id") Long id) {
         return service.findById(id);
     }
 
     @PostMapping(value="/")
-    public ResponseEntity<DiaExcecao> createDiaExcecao(@RequestBody DiaExcecao diaExcecao) {
+    public ResponseEntity<DiaExcecaoModel> createDiaExcecao(@RequestBody DiaExcecaoModel diaExcecao) {
 
         return new ResponseEntity<>(service.create(diaExcecao), HttpStatus.CREATED);
     }
 
 
     @PutMapping(value="/{id}")
-    public DiaExcecao updateDiaExcecao(@RequestBody DiaExcecao diaExcecao, @PathVariable(value="id") Long id) {
+    public DiaExcecaoModel updateDiaExcecao(@RequestBody DiaExcecaoModel diaExcecao, @PathVariable(value="id") Long id) {
         return service.update(diaExcecao, id);
     }
 
     @DeleteMapping(value="/{id}")
-    public ResponseEntity<DiaExcecao> deleteDiaExcecao(@PathVariable(value="id") Long id) {
+    public ResponseEntity<DiaExcecaoModel> deleteDiaExcecao(@PathVariable(value="id") Long id) {
         service.delete(id);
 
         return new ResponseEntity<>(null, HttpStatus.NO_CONTENT);

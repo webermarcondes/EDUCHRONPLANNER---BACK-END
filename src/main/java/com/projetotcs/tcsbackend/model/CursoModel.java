@@ -8,7 +8,7 @@ import java.util.List;
 
 @Entity
 @Table(name="curso")
-public class Curso {
+public class CursoModel {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -17,19 +17,14 @@ public class Curso {
     @Column
     private String nome;
 
-    @Column
-    private Integer horasTotais;
-
     @ManyToOne()
     @JoinColumn(name="usuario_coord_id")
-    private Usuario usuarioCoordenador;
+    private UsuarioModel usuarioCoordenador;
 
     @OneToMany(mappedBy = "curso")
     @JsonIgnore
-    private List<Fase> fases;
+    private List<FaseModel> fases;
 
-
-    //Verificar viabilidade do Atributo abaixo:
     @Column
     private Integer qtdeFases;
 
@@ -50,14 +45,6 @@ public class Curso {
         this.nome = nome;
     }
 
-    public Integer getHorasTotais() {
-        return horasTotais;
-    }
-
-    public void setHorasTotais(Integer horasTotais) {
-        this.horasTotais = horasTotais;
-    }
-
     public Integer getQtdeFases() {
         return qtdeFases;
     }
@@ -66,19 +53,19 @@ public class Curso {
         this.qtdeFases = qtdeFases;
     }
 
-    public Usuario getUsuarioCoordenador() {
+    public UsuarioModel getUsuarioCoordenador() {
         return usuarioCoordenador;
     }
 
-    public void setUsuarioCoordenador(Usuario usuarioCoordenador) {
+    public void setUsuarioCoordenador(UsuarioModel usuarioCoordenador) {
         this.usuarioCoordenador = usuarioCoordenador;
     }
 
-    public List<Fase> getFases() {
+    public List<FaseModel> getFases() {
         return fases;
     }
 
-    public void setFases(List<Fase> fases) {
+    public void setFases(List<FaseModel> fases) {
         this.fases = fases;
     }
 }

@@ -1,14 +1,14 @@
 package com.projetotcs.tcsbackend.services;
 
 
-import com.projetotcs.tcsbackend.model.Sala;
+import com.projetotcs.tcsbackend.model.SalaModel;
 import com.projetotcs.tcsbackend.repository.SalaRepository;
-import jakarta.websocket.server.ServerEndpoint;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.dao.DataIntegrityViolationException;
 import org.springframework.data.rest.webmvc.ResourceNotFoundException;
 import org.springframework.stereotype.Service;
-
 import java.util.List;
+import java.util.Optional;
 
 @Service
 public class SalaService {
@@ -17,9 +17,9 @@ public class SalaService {
     @Autowired
     SalaRepository repository;
 
-    public List<Sala> findAll() {
+    public List<SalaModel> findAll() {
 
-        List<Sala> salas = repository.findAll();
+        List<SalaModel> salas = repository.findAll();
 
         if(salas.isEmpty()) {
             throw new ResourceNotFoundException("Não há salas cadastradas");
@@ -28,37 +28,48 @@ public class SalaService {
         return salas;
     }
 
-    public Sala findById(Long id) {
+
+    public SalaModel findById(Long id) {
 
         return repository.findById(id)
                 .orElseThrow(() -> new ResourceNotFoundException("Não registro de sala com o ID informado"));
     }
 
-    public Sala findByNumero(Integer numeroSala) {
 
-        Sala sala = repository.findByNumero(numeroSala);
+    public Optional<SalaModel> findByNumero(Integer numeroSala) {
 
-        if(sala.getId() == null) {
-            throw new ResourceNotFoundException("Não há registro de sala com o número informado");
+        Optional<SalaModel> sala = repository.findByNumero(numeroSala);
+
+        if(sala.isPresent()) {
+            return sala;
         }
 
+        throw new ResourceNotFoundException("Não há registro de sala com o número informado");
+    }
+
+    public SalaModel create(SalaModel sala) {
+
+        Optional<SalaModel> salaEntity = repository.findByNumero(sala.getNumero());
+
+        if (salaEntity.isPresent()) {
+            throw  new DataIntegrityViolationException("Já existe sala com o número informado");
+        }
+        else {
+            repository.save(sala);
+        }
         return sala;
     }
 
-    public Sala create(Sala sala) {
-        return repository.save(sala);
-    }
-
-    public Sala update(Sala sala, Long id) {
+    public SalaModel update(SalaModel sala, Long id) {
 
         var entity = repository.findById(id)
-                .orElseThrow(() -> new ResourceNotFoundException("Não registro de sala com o ID informado para atualizar informações"));
+                .orElseThrow(() -> new ResourceNotFoundException("Não registro de sala com o ID informado"));
 
         entity.setNumero(sala.getNumero());
 
         repository.save(entity);
 
-        return sala;
+        return entity;
     }
 
     public void delete(Long id) {

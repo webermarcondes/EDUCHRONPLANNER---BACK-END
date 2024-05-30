@@ -1,9 +1,11 @@
 package com.projetotcs.tcsbackend.repository;
 
-import com.projetotcs.tcsbackend.model.Sala;
+import com.projetotcs.tcsbackend.model.SalaModel;
 import org.springframework.data.jpa.repository.JpaRepository;
 
-public interface SalaRepository  extends JpaRepository<Sala, Long> {
+import java.util.Optional;
 
-    Sala findByNumero(Integer numero);
+public interface SalaRepository  extends JpaRepository<SalaModel, Long> {
+
+    Optional<SalaModel> findByNumero(Integer numero);
 }

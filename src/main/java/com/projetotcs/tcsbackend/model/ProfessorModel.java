@@ -11,10 +11,9 @@ import jakarta.persistence.Id;
 import jakarta.persistence.Table;
 
 
-/*Falta implementar a foto de perfil*/
 @Entity
 @Table(name="professor")
-public class Professor {
+public class ProfessorModel {
    
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -25,6 +24,9 @@ public class Professor {
 
     @Column()
     private String telefone;
+
+    @Column(unique = true, length = 11)
+    private String cpf;
 
     @Column()
     private Integer qtdeDiasDeAula;
@@ -83,5 +85,13 @@ public class Professor {
 
     public void setUrlFotoPerfil(String urlFotoPerfil) {
         this.urlFotoPerfil = urlFotoPerfil;
+    }
+
+    public String getCpf() {
+        return cpf;
+    }
+
+    public void setCpf(String cpf) {
+        this.cpf = cpf;
     }
 }
