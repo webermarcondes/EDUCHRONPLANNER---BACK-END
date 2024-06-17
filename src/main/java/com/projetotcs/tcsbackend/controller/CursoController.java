@@ -9,6 +9,8 @@ import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
 
+
+//Testar o método de busca por nome
 @RestController
 @RequestMapping("/api/curso")
 public class CursoController {

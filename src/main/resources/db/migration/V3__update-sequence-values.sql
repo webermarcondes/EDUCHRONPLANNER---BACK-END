@@ -2,15 +2,9 @@ ALTER SEQUENCE IF EXISTS public.dia_da_semana_id_seq
     OWNED BY NONE;
 SELECT setval('public.dia_excecao_id_seq', 3, true);
 
-
-ALTER SEQUENCE IF EXISTS public.sala_id_seq
-    OWNED BY NONE;
-SELECT setval('public.sala_id_seq', 2, true);
-
-
 ALTER SEQUENCE IF EXISTS public.professor_id_seq
     OWNED BY NONE;
-SELECT setval('public.professor_id_seq', 2, true);
+SELECT setval('public.professor_id_seq', 16, true);
 
 
 ALTER SEQUENCE IF EXISTS public.usuario_id_seq
@@ -30,12 +24,12 @@ SELECT setval('public.fase_id_seq', 9, true);
 
 ALTER SEQUENCE IF EXISTS public.disciplina_id_seq
     OWNED BY NONE;
-SELECT setval('public.disciplina_id_seq', 2, true);
+SELECT setval('public.disciplina_id_seq', 30, true);
 
 
 ALTER SEQUENCE IF EXISTS public.agenda_professor_id_seq
     OWNED BY NONE;
-SELECT setval('public.agenda_professor_id_seq', 2, true);
+SELECT setval('public.agenda_professor_id_seq', 31, true);
 
 
 

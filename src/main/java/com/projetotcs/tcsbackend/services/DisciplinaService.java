@@ -1,6 +1,7 @@
 package com.projetotcs.tcsbackend.services;
 
 import com.projetotcs.tcsbackend.model.DisciplinaModel;
+import com.projetotcs.tcsbackend.model.FaseModel;
 import com.projetotcs.tcsbackend.repository.DisciplinaRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.rest.webmvc.ResourceNotFoundException;
@@ -29,6 +30,11 @@ public class DisciplinaService {
 
         return repository.findById(id)
                 .orElseThrow(() -> new ResourceNotFoundException("Não há registro de disciplina com o ID informado"));
+    }
+
+    public List<DisciplinaModel> findByFase(FaseModel fase) {
+
+        return repository.findByFase(fase);
     }
 
     public DisciplinaModel create(DisciplinaModel disciplina) {

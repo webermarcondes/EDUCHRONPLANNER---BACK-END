@@ -31,10 +31,6 @@ public class AgendaProfessorModel {
     private DisciplinaModel disciplina;
 
 
-    @ManyToOne()
-    @JoinColumn(name = "sala_id")
-    private SalaModel sala;
-
 
     public Long getId() {
         return id;
@@ -68,11 +64,4 @@ public class AgendaProfessorModel {
         this.disciplina = disciplina;
     }
 
-    public SalaModel getSala() {
-        return sala;
-    }
-
-    public void setSala(SalaModel sala) {
-        this.sala = sala;
-    }
 }

@@ -2,6 +2,7 @@ package com.projetotcs.tcsbackend.services;
 
 
 import com.projetotcs.tcsbackend.model.AgendaProfessorModel;
+import com.projetotcs.tcsbackend.model.FaseModel;
 import com.projetotcs.tcsbackend.repository.AgendaProfessorRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.rest.webmvc.ResourceNotFoundException;
@@ -46,7 +47,6 @@ public class AgendaProfessorService {
         entity.setProfessor(agendaProfessor.getProfessor());
         entity.setDiaDaSemana(agendaProfessor.getDiaDaSemana());
         entity.setDisciplina(agendaProfessor.getDisciplina());
-        entity.setSala(agendaProfessor.getSala());
 
         repository.save(entity);
 
@@ -59,5 +59,8 @@ public class AgendaProfessorService {
     }
 
 
+    public List<AgendaProfessorModel> findByDisciplinaFase(FaseModel fase) {
 
+        return repository.findByDisciplinaFase(fase);
+    }
 }

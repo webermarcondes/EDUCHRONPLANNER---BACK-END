@@ -1,12 +1,14 @@
 package com.projetotcs.tcsbackend.services;
 
 
+import com.projetotcs.tcsbackend.model.CursoModel;
 import com.projetotcs.tcsbackend.model.FaseModel;
 import com.projetotcs.tcsbackend.repository.FaseRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.rest.webmvc.ResourceNotFoundException;
 import org.springframework.stereotype.Service;
 
+import java.util.ArrayList;
 import java.util.List;
 
 @Service
@@ -40,6 +42,10 @@ public class FaseService {
         }
 
         return fase;
+    }
+
+    public List<FaseModel> getFasesByCurso(CursoModel curso) {
+        return repository.getFasesByCurso(curso);
     }
 
     public FaseModel create(FaseModel fase) {

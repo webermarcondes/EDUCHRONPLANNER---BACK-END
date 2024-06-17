@@ -33,6 +33,10 @@ public class CursoService {
 
     }
 
+    public CursoModel findByNome(String nome) {
+        return repository.findByNome(nome);
+    }
+
     public CursoModel create(CursoModel curso) {
         return repository.save(curso);
     }

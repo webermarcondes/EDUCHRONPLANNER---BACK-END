@@ -12,6 +12,8 @@ import java.util.List;
 
 /*
 Fazer validação de quantidade de aulas antes de atualizar ou vincular;
+
+Fazer get by professor e dia da semana aonde disciplina é vazio;
  */
 
 @RestController

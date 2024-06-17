@@ -29,27 +29,6 @@ TABLESPACE pg_default;
 ALTER TABLE IF EXISTS public.dia_excecao
     OWNER to postgres;
 
-
-
-
--- Table: public.sala
--- DROP TABLE IF EXISTS public.sala;
-CREATE TABLE IF NOT EXISTS public.sala
-(
-    id SERIAL NOT NULL,
-    numero integer,
-    CONSTRAINT sala_pkey PRIMARY KEY (id),
-    CONSTRAINT uk_rld8ojxb8ymcif6q6060vq924 UNIQUE (numero)
-)
-
-TABLESPACE pg_default;
-
-ALTER TABLE IF EXISTS public.sala
-    OWNER to postgres;
-
-
-
-
 -- Table: public.professor
 -- DROP TABLE IF EXISTS public.professor;
 CREATE TABLE IF NOT EXISTS public.professor
@@ -168,12 +147,6 @@ CREATE TABLE IF NOT EXISTS public.agenda_professor
     dia_da_semana_id bigint NOT NULL,
     disciplina_id bigint,
     professor_id bigint,
-    sala_id bigint,
-    CONSTRAINT agenda_professor_pkey PRIMARY KEY (id),
-    CONSTRAINT fk85j11vx5bs6j3umaangu5tbg7 FOREIGN KEY (sala_id)
-        REFERENCES public.sala (id) MATCH SIMPLE
-        ON UPDATE NO ACTION
-        ON DELETE NO ACTION,
     CONSTRAINT fklw88vq6u303avg4ucbbeks2ow FOREIGN KEY (dia_da_semana_id)
         REFERENCES public.dia_da_semana (id) MATCH SIMPLE
         ON UPDATE NO ACTION
