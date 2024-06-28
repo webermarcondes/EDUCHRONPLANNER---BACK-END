@@ -28,9 +28,6 @@ public class UsuarioModel {
     @Column
     private String senha;
 
-    //Remover
-    @Column()
-    private String urlFotoPerfil;
 
     @Column
     private Status status;
@@ -89,14 +86,6 @@ public class UsuarioModel {
 
     public void setNivelPermissao(NivelPermissao nivelPermissao) {
         this.nivelPermissao = nivelPermissao;
-    }
-
-    public String getUrlFotoPerfil() {
-        return urlFotoPerfil;
-    }
-
-    public void setUrlFotoPerfil(String urlFotoPerfil) {
-        this.urlFotoPerfil = urlFotoPerfil;
     }
 
     public String getCpf() {

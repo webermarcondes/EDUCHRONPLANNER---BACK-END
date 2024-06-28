@@ -68,7 +68,6 @@ public class ProfessorService {
             entity.setTelefone(professor.getTelefone());
             entity.setQtdeDiasDeAula(professor.getQtdeDiasDeAula());
             entity.setCpf(professor.getCpf());
-            entity.setUrlFotoPerfil(professor.getUrlFotoPerfil());
 
             repository.save(entity);
 

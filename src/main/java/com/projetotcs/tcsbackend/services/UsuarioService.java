@@ -63,7 +63,6 @@ public class UsuarioService {
             entity.setNome(usuario.getNome());
             entity.setSenha(usuario.getSenha());
             entity.setCpf(usuario.getCpf());
-            entity.setUrlFotoPerfil(usuario.getUrlFotoPerfil());
 
             repository.save(entity);
 

@@ -30,11 +30,7 @@ public class ProfessorModel {
 
     @Column()
     private Integer qtdeDiasDeAula;
-    
 
-    //Remover
-    @Column()
-    private String urlFotoPerfil;
 
     @Column()
     private Status status;
@@ -78,14 +74,6 @@ public class ProfessorModel {
     }
     public void setStatus(Status status) {
         this.status = status;
-    }
-
-    public String getUrlFotoPerfil() {
-        return urlFotoPerfil;
-    }
-
-    public void setUrlFotoPerfil(String urlFotoPerfil) {
-        this.urlFotoPerfil = urlFotoPerfil;
     }
 
     public String getCpf() {
