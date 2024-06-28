@@ -10,10 +10,10 @@ import jakarta.persistence.Id;
 public class DiaDaSemanaModel {
     
     @Id
-    public Long id;
+    private Long id;
 
     @Column()
-    public String descricao;
+    private String descricao;
 
 
     public Long getId() {

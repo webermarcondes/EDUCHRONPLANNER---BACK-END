@@ -28,6 +28,7 @@ public class UsuarioModel {
     @Column
     private String senha;
 
+    //Remover
     @Column()
     private String urlFotoPerfil;
 

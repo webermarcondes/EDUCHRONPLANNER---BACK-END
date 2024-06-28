@@ -32,6 +32,7 @@ public class ProfessorModel {
     private Integer qtdeDiasDeAula;
     
 
+    //Remover
     @Column()
     private String urlFotoPerfil;
 

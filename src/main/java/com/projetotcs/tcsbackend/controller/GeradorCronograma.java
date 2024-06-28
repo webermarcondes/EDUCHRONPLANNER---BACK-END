@@ -1,22 +1,20 @@
 package com.projetotcs.tcsbackend.controller;
 
 
+import com.projetotcs.tcsbackend.requests.reqGerarCronograma;
 import com.projetotcs.tcsbackend.utilitarios.CelulaExcel;
+import com.projetotcs.tcsbackend.utilitarios.DadosCelulaDiaAula;
 import com.projetotcs.tcsbackend.utilitarios.ManipularExcel;
 import com.projetotcs.tcsbackend.model.*;
 import com.projetotcs.tcsbackend.services.*;
-import org.json.JSONObject;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.RequestBody;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 
 import java.util.*;
 
 @RestController
 @RequestMapping("/api/cronograma")
-public class CronogramaController {
+public class GeradorCronograma {
 
     /*
     Montar estrutura
@@ -48,19 +46,47 @@ public class CronogramaController {
     @Autowired
     DiaDaSemanaService diaDaSemanaService;
 
-    @GetMapping(value="/gerarcronograma/")
-    public String gerarCronograma(@RequestBody String nomeCurso) {
+    @Autowired
+    DiaExcecaoService diaExcecaoService;
 
-        JSONObject jsonNomeCurso = new JSONObject(nomeCurso);
+    @PostMapping(value="/gerarcronograma/")
+    public String gerarCronograma(@RequestBody reqGerarCronograma reqCronograma) {
+
+        //Inicio aula: (Linha 6, coluna 2)
+        //Fim aula: (Linha 7, coluna 2)
+
+        String erros = "";
+
+        String nomeArquivo = "C:/Users/weber/Downloads/modelo_cronograma1.xlsx";
+
+        ManipularExcel.preencherCelula(nomeArquivo,
+                                        6,
+                                        2,
+                                        new CelulaExcel("Início das aulas: " + reqCronograma.getDataInicio(), "#Add8e6", "ESQUERDA"));
+
+        ManipularExcel.preencherCelula(nomeArquivo,
+                7,
+                2,
+                new CelulaExcel("Termino das aulas:" + reqCronograma.getDataFim(), "#Add8e6", "ESQUERDA"));
+
+        //Preencher também o nome do curso e o Periodo
+
+
+
         //Pega o curso pelo nome do Curso
-        CursoModel curso = cursoService.findByNome(jsonNomeCurso.getString("nomeCurso"));
+        CursoModel curso = cursoService.findByNome(reqCronograma.getNomeCurso());
 
         //Pega as fases do Curso selecionado
         List<FaseModel> fases = faseService.getFasesByCurso(curso);
 
+
+
         int linha = 9;
         //Iteração de fase a fase do curso para pegar os registros de agenda do professor
         //de cada fase, e adicionar ao mapper da agenda de professores separando por dia da semana
+
+        Map<String, Long> disciplinasRepetidas = new LinkedHashMap<>();
+        List<String> meses = ManipularExcel.lerCelulasMescladas(nomeArquivo, 8, 7, 6);
         for (FaseModel fase : fases) {
 
             //Mapper que ira organizar os registros da agenda de professor da fase por
@@ -73,14 +99,16 @@ public class CronogramaController {
                 agProfPorDiaSemana.put(diaDaSemana.getDescricao(), new ArrayList<AgendaProfessorModel>());
             }
 
-
-
+            Long qtdeRepeticoesDisciplina;
             for (AgendaProfessorModel agProf : agendaProfessorService.findByDisciplinaFase(fase)) {
 
                 String diaDaSemanaDescri = agProf.getDiaDaSemana().getDescricao();
 
+
                 if (diaDaSemanaDescri.equals("SEGUNDA-FEIRA")) {
                     agProfPorDiaSemana.get("SEGUNDA-FEIRA").add(agProf);
+
+
                 } else if (diaDaSemanaDescri.equals("TERÇA-FEIRA")) {
                     agProfPorDiaSemana.get("TERÇA-FEIRA").add(agProf);
                 } else if (diaDaSemanaDescri.equals("QUARTA-FEIRA")) {
@@ -89,18 +117,26 @@ public class CronogramaController {
                     agProfPorDiaSemana.get("QUINTA-FEIRA").add(agProf);
                 } else if (diaDaSemanaDescri.equals("SEXTA-FEIRA")) {
                     agProfPorDiaSemana.get("SEXTA-FEIRA").add(agProf);
-                } else {
-                    agProfPorDiaSemana.get("SÁBADO").add(agProf);
                 }
+
+                qtdeRepeticoesDisciplina = agendaProfessorService.countByDisciplinaId(agProf.getDisciplina().getId());
+
+                if(qtdeRepeticoesDisciplina > 1 && !disciplinasRepetidas.containsKey(agProf.getDisciplina().getNome())) {
+                    disciplinasRepetidas.put(agProf.getDisciplina().getNome(), qtdeRepeticoesDisciplina);
+                }
+
             }
 
 
                 for (String key : agProfPorDiaSemana.keySet()) {
+                    List<DadosCelulaDiaAula> dadosCelulaDiaAulas = new ArrayList<>();
                     List<CelulaExcel> conteudos = new ArrayList<>();
                     List<AgendaProfessorModel> agendaProfessores = agProfPorDiaSemana.get(key);
 
                     if (agendaProfessores.size() == 0) {
-                        break;
+                        erros += key + " não tem registro na agenda professor na " + fase.getNumero() + "º fase \n";
+                        linha += 1;
+                        continue;
                     }
 
                     else if (agendaProfessores.size() == 1) {
@@ -124,6 +160,22 @@ public class CronogramaController {
                         conteudos.add(nomeProfessores);
                         conteudos.add(corDC1);
                         conteudos.add(corDC2);
+
+                        int qtdePreenchivel = 0;
+                        if(disciplinasRepetidas.containsKey(agProf.getDisciplina().getNome())) {
+
+                            int qtdeRepeticoes = disciplinasRepetidas.get(agProf.getDisciplina().getNome()).intValue();
+                            qtdePreenchivel = ((agProf.getDisciplina().getCargaHoraria() / 4) / qtdeRepeticoes);
+                        }
+                        else {
+                            qtdePreenchivel = agProf.getDisciplina().getCargaHoraria() / 4;
+                        }
+                        dadosCelulaDiaAulas.add(new DadosCelulaDiaAula(qtdePreenchivel, agProf.getDisciplina().getCodigoCor()));
+
+                        ManipularExcel.preencherCelulas(nomeArquivo, linha, 2, conteudos);
+                        ManipularExcel.preencherDias(nomeArquivo, linha, 7, meses, dadosCelulaDiaAulas, diaExcecaoService.findAll(), reqCronograma.getDataInicio(), reqCronograma.getDataFim());
+
+                        linha += 1;
 
                     } else if (agendaProfessores.size() > 1) {
 
@@ -165,6 +217,18 @@ public class CronogramaController {
                                 disciplinasHoras.setHexCorFonte(agProf.getDisciplina().getCodigoCor());
                                 nomeProfessores.setHexCorFonte(agProf.getDisciplina().getCodigoCor());
                             }
+
+
+                            int qtdePreenchivel = 0;
+                            if(disciplinasRepetidas.containsKey(agProf.getDisciplina().getNome())) {
+
+                                int qtdeRepeticoes = disciplinasRepetidas.get(agProf.getDisciplina().getNome()).intValue();
+                                qtdePreenchivel = ((agProf.getDisciplina().getCargaHoraria() / 4) / qtdeRepeticoes);
+                            }
+                            else {
+                                qtdePreenchivel = agProf.getDisciplina().getCargaHoraria() / 4;
+                            }
+                            dadosCelulaDiaAulas.add(new DadosCelulaDiaAula(qtdePreenchivel, agProf.getDisciplina().getCodigoCor()));
                         }
 
                         conteudos.add(disciplinasHoras);
@@ -172,21 +236,25 @@ public class CronogramaController {
                         conteudos.add(corDC1);
                         conteudos.add(corDC2);
 
+                        ManipularExcel.preencherCelulas(nomeArquivo, linha, 2, conteudos);
+                        ManipularExcel.preencherDias(nomeArquivo, linha, 7, meses, dadosCelulaDiaAulas, diaExcecaoService.findAll(), reqCronograma.getDataInicio(), reqCronograma.getDataFim());
+
+
+                        linha += 1;
                     }
 
-                    String nomeArquivo = "C:/Users/weber/Downloads/modelo_cronograma1.xlsx";
-                    ManipularExcel.preencherCelulas(nomeArquivo, linha, 2, 5, conteudos);
 
 
-                    linha += 1;
+
                 }
 
-                linha += 3;
+                linha += 3; //espaço entre os conteúdos das fases
+
 
             }
 
 
-        return "Teste";
+        return erros;
     }
 
 

@@ -8,6 +8,7 @@ public class CelulaExcel {
     private String conteudo;
     private String hexCorFundo;
     private List<String> hexsCoresFonte;
+    private String alinhamento;
 
     public CelulaExcel(String conteudo, String hexCorFundo) {
         this.conteudo = conteudo;
@@ -21,7 +22,11 @@ public class CelulaExcel {
         this.hexCorFundo = "";
     }
 
-
+    public CelulaExcel(String conteudo, String hexCorFundo, String alinhamento) {
+        this.conteudo = conteudo;
+        this.hexCorFundo = hexCorFundo;
+        this.alinhamento = alinhamento;
+    }
 
     public String getConteudo() {
         return conteudo;
@@ -49,5 +54,13 @@ public class CelulaExcel {
 
     public void setHexCorFonte(String hexCorFonte) {
         this.hexsCoresFonte.add(hexCorFonte);
+    }
+
+    public String getAlinhamento() {
+        return alinhamento;
+    }
+
+    public void setAlinhamento(String alinhamento) {
+        this.alinhamento = alinhamento;
     }
 }

@@ -16,6 +16,7 @@ Fazer validação de quantidade de aulas antes de atualizar ou vincular;
 Fazer get by professor e dia da semana aonde disciplina é vazio;
  */
 
+//alterar nome do find disciplinaFase para FaseDisciplina
 @RestController
 @RequestMapping("/api/agendaprofessor")
 public class AgendaProfessorController {

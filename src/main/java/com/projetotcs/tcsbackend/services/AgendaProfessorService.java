@@ -63,4 +63,8 @@ public class AgendaProfessorService {
 
         return repository.findByDisciplinaFase(fase);
     }
+
+    public Long countByDisciplinaId(Long disciplinaId) {
+        return repository.countByDisciplinaId(disciplinaId);
+    }
 }

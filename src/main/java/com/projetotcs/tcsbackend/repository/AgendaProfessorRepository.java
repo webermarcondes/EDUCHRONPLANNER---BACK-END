@@ -9,4 +9,6 @@ import java.util.List;
 public interface AgendaProfessorRepository extends JpaRepository<AgendaProfessorModel, Long> {
 
     List<AgendaProfessorModel> findByDisciplinaFase(FaseModel fase);
+
+    Long countByDisciplinaId(Long disciplinaId);
 }

@@ -4,8 +4,7 @@ INSERT INTO dia_da_semana(id, descricao)
            (2, 'TERÇA-FEIRA'),
            (3, 'QUARTA-FEIRA'),
            (4, 'QUINTA-FEIRA'),
-           (5, 'SEXTA-FEIRA'),
-           (6, 'SÁBADO');
+           (5, 'SEXTA-FEIRA');
 
 
 --- INSERTS NA TABELA DE DIA EXCEÇÃO
@@ -17,30 +16,30 @@ INSERT INTO public.dia_excecao(id, data, motivo)
 
 --- INSERTS NA TABELA DE PROFESSOR
 INSERT INTO public.professor(
-	id, cpf, nome_completo, qtde_dias_de_aula, status, telefone, url_foto_perfil)
-	VALUES (1, '12345678900', 'Jorge Henrique da Silva Naspoli', 2, 0, '48996212844', 'url'),
-	       (2, '12345688901', 'Marcelo Mazon', 2, 0, '48996212954', 'url2'),
-	       (3, '12345678902', 'Christine Vieira', 3, 0, '48996212844', 'url3'),
-           (4, '12345688903', 'Dayana Ricken', 5, 0, '48996212954', 'url4'),
-           (5, '12345688904', 'Jailson Torquarto', 1, 0, '48996212954', 'url5'),
-           (6, '12345688905', 'Rogério Cortina', 2, 0, '48997554040', 'url6'),
-           (7, '12345688906', 'Daniel Goulart', 1, 0, '48996508090' ,'url7'),
-           (8, '12345688907', 'Muriel Benhardt', 3, 0, '45995709000', 'url8'),
-           (9, '12345688908', 'Roberto Fermino Medeiros', 3, 0, '45995709001', 'url9'),
-           (10, '12345688909', 'Fernando Gabriel', 2, 0, '44994700610', 'url10'),
-           (11, '12345688910', 'Bruno Kurzawe', 3, 0, '44994700611', 'url11'),
-           (12, '12345688911', 'Cledemilson dos santos', 2, 0, '44994700612', 'url12'),
-           (13, '12345688912', 'Roni Edson dos santos', 2, 0, '44994700613', 'url13'),
-           (14, '12345688913', 'Roseli Jenoveva Neto', 1, 0, '44994700614', 'url14'),
-           (15, '12345688914', 'Liliane Fernandes', 1, 0, '44994700615', 'url15'),
-           (16, '12345688915', 'Lucas Bonfante Rebelo', 2, 0, '44994700616', 'url16');
+	id, cpf, nome_completo, qtde_dias_de_aula, status, telefone)
+	VALUES (1, '12345678900', 'Jorge Henrique da Silva Naspoli', 2, 0, '48996212844'),
+	       (2, '12345688901', 'Marcelo Mazon', 2, 0, '48996212954'),
+	       (3, '12345678902', 'Christine Vieira', 3, 0, '48996212844'),
+           (4, '12345688903', 'Dayana Ricken', 5, 0, '48996212954'),
+           (5, '12345688904', 'Jailson Torquarto', 1, 0, '48996212954'),
+           (6, '12345688905', 'Rogério Cortina', 2, 0, '48997554040'),
+           (7, '12345688906', 'Daniel Goulart', 1, 0, '48996508090'),
+           (8, '12345688907', 'Muriel Benhardt', 3, 0, '45995709000'),
+           (9, '12345688908', 'Roberto Fermino Medeiros', 3, 0, '45995709001'),
+           (10, '12345688909', 'Fernando Gabriel', 2, 0, '44994700610'),
+           (11, '12345688910', 'Bruno Kurzawe', 3, 0, '44994700611'),
+           (12, '12345688911', 'Cledemilson dos santos', 2, 0, '44994700612'),
+           (13, '12345688912', 'Roni Edson dos santos', 2, 0, '44994700613'),
+           (14, '12345688913', 'Roseli Jenoveva Neto', 1, 0, '44994700614'),
+           (15, '12345688914', 'Liliane Fernandes', 1, 0, '44994700615'),
+           (16, '12345688915', 'Lucas Bonfante Rebelo', 2, 0, '44994700616');
 
 
 --- INSERTS NA TABELA USUÁRIO
 INSERT INTO public.usuario(
-	id, cpf, email, nivel_permissao, nome, senha, status, url_foto_perfil)
-	VALUES (1, '12345678911', 'em@il', 0, 'ADMIN', 'admin', 0, 'url'),
-	       (2, '12345678901', 'em@iLL', 1, 'Lucas Rebelo', 'lcrb123', 0, 'url1');
+	id, cpf, email, nivel_permissao, nome, senha, status)
+	VALUES (1, '12345678911', 'em@il', 0, 'ADMIN', 'admin', 0),
+	       (2, '12345678901', 'em@iLL', 1, 'Lucas Rebelo', 'lcrb123', 0);
 
 
 --- INSERTS NA TABELA DE CURSO

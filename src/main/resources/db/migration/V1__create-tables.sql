@@ -39,7 +39,6 @@ CREATE TABLE IF NOT EXISTS public.professor
     qtde_dias_de_aula integer,
     status smallint,
     telefone character varying(255) COLLATE pg_catalog."default",
-    url_foto_perfil character varying(255) COLLATE pg_catalog."default",
     CONSTRAINT professor_pkey PRIMARY KEY (id),
     CONSTRAINT uk_pk1omryj5cud6uslkepgyfrca UNIQUE (cpf),
     CONSTRAINT professor_status_check CHECK (status >= 0 AND status <= 1)
@@ -63,7 +62,6 @@ CREATE TABLE IF NOT EXISTS public.usuario
     nome character varying(255) COLLATE pg_catalog."default",
     senha character varying(8),
     status smallint,
-    url_foto_perfil character varying(255) COLLATE pg_catalog."default",
     CONSTRAINT usuario_pkey PRIMARY KEY (id),
     CONSTRAINT uk_692bsnqxa8m9fmx7m1yc6hsui UNIQUE (cpf),
     CONSTRAINT usuario_nivel_permissao_check CHECK (nivel_permissao >= 0 AND nivel_permissao <= 1),
