@@ -193,6 +193,7 @@ public static XSSFWorkbook preencherCelulas(XSSFWorkbook workbook,
                         if (valorDiaLido < diaAnteriorLido) {
                             numMes += 1;}
 
+
                         String dia = valorDiaLido + "/" + MesStringToNumeral.getNumMes(meses.get(numMes)) + "/2024";
 
 
@@ -287,7 +288,7 @@ public static XSSFWorkbook preencherCelulas(XSSFWorkbook workbook,
 
         return workbook;
     }
-        public static List<String> lerCelulasMescladas (String nomeArquivo,
+        public static List<String> lerCelulasMescladas (XSSFWorkbook workbook,
                                                         int linha,
                                                         int celulaInicio,
                                                         int qtdeCelulasALer){
@@ -297,23 +298,23 @@ public static XSSFWorkbook preencherCelulas(XSSFWorkbook workbook,
             int celula = celulaInicio;
             int qtdeCelulaslidas = 0;
 
-            try {
-                InputStream inputStream = new FileInputStream(nomeArquivo);
-                XSSFWorkbook workbook = new XSSFWorkbook(inputStream);
 
-                XSSFSheet sheet = workbook.getSheetAt(0);
+            XSSFSheet sheet = workbook.getSheetAt(0);
 
-                while(true) {
+            while(true) {
                 for (int i = 0; i < sheet.getNumMergedRegions(); i++) {
 
-                    CellRangeAddress region = sheet.getMergedRegion(i);
+                CellRangeAddress region = sheet.getMergedRegion(i);
 
-                    if (region.isInRange(linha, celula)) {
-                        conteudoCelulas.add(sheet.getRow(region.getFirstRow()).getCell(region.getFirstColumn()).getStringCellValue());
-                        qtdeCelulaslidas += 1;
+                if (region.isInRange(linha, celula)) {
+                    conteudoCelulas.add(sheet.getRow(region.getFirstRow()).getCell(region.getFirstColumn()).getStringCellValue());
+                    qtdeCelulaslidas += 1;
+                    celula += region.getNumberOfCells();
 
-                        break;
-                    }}
+                    break;
+                    }
+
+                }
 
                 if(qtdeCelulaslidas == qtdeCelulasALer) {
                     break;
@@ -321,11 +322,6 @@ public static XSSFWorkbook preencherCelulas(XSSFWorkbook workbook,
             }
 
 
-            } catch (FileNotFoundException e) {
-                throw new RuntimeException(e);
-            } catch (IOException e) {
-                throw new RuntimeException(e);
-            }
             return conteudoCelulas;
 
         }

@@ -70,9 +70,9 @@ public class GeradorCronograma {
         int linha = 9;
 
         Map<String, Long> disciplinasRepetidas = new LinkedHashMap<>();
-        List<String> meses = ManipularExcel.lerCelulasMescladas(nomeArquivo, 8, 7, 6);
+        List<String> meses = ManipularExcel.lerCelulasMescladas(workbook, 8, 7, 6);
         for (FaseModel fase : fases) {
-
+            String erroNovo = "";
 
 
             Map<String, List<AgendaProfessorModel>> agProfPorDiaSemana = new LinkedHashMap<>();
@@ -112,14 +112,16 @@ public class GeradorCronograma {
 
             for (String key : agProfPorDiaSemana.keySet()) {
                 if(agProfPorDiaSemana.get(key).size() == 0) {
-                    erros += "cronograma da "
+                    erroNovo += "cronograma da "
                              + fase.getNumero() +
                             "ª fase não gerado devido a falta da disciplina para os dias da semana";
                     break;
                 }
             }
 
-            if(!erros.isEmpty()) {
+            if(!erroNovo.isEmpty()) {
+                erros += erroNovo + "\n\n";
+                erroNovo = "";
                 linha += 8;
                 continue;
             }
@@ -163,10 +165,6 @@ public class GeradorCronograma {
                         }
                         dadosCelulaDiaAulas.add(new DadosCelulaDiaAula(qtdePreenchivel, agProf.getDisciplina().getCodigoCor()));
 
-                        workbook =ManipularExcel.preencherCelulas(workbook, linha, 2, conteudos);
-                        workbook = ManipularExcel.preencherDias(workbook, linha, 7, meses, dadosCelulaDiaAulas, diaExcecaoService.findAll(), reqCronograma.getDataInicio(), reqCronograma.getDataFim());
-
-                        linha += 1;
 
                     }
                     else if (agendaProfessores.size() > 1) {
@@ -228,20 +226,21 @@ public class GeradorCronograma {
                         conteudos.add(corDC1);
                         conteudos.add(corDC2);
 
-                        workbook = ManipularExcel.preencherCelulas(workbook, linha, 2, conteudos);
-                        workbook = ManipularExcel.preencherDias(workbook, linha, 7, meses, dadosCelulaDiaAulas, diaExcecaoService.findAll(), reqCronograma.getDataInicio(), reqCronograma.getDataFim());
 
 
-                        linha += 1;
                     }
 
-                }
+                    workbook =ManipularExcel.preencherCelulas(workbook, linha, 2, conteudos);
+                    workbook = ManipularExcel.preencherDias(workbook, linha, 7, meses, dadosCelulaDiaAulas, diaExcecaoService.findAll(), reqCronograma.getDataInicio(), reqCronograma.getDataFim());
 
-                linha += 3;
-                erros += "";
-
+                    linha += 1;
             }
 
+                linha += 3;
+
+
+            }
+        erros += "";
         ByteArrayOutputStream outputStream = new ByteArrayOutputStream();
         workbook.write(outputStream);
         workbook.close();
