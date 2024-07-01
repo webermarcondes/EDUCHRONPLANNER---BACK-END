@@ -1,6 +1,5 @@
 package com.projetotcs.tcsbackend.controller;
 
-
 import com.projetotcs.tcsbackend.model.AgendaProfessorModel;
 import com.projetotcs.tcsbackend.services.AgendaProfessorService;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -10,13 +9,7 @@ import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
 
-/*
-Fazer validação de quantidade de aulas antes de atualizar ou vincular;
 
-Fazer get by professor e dia da semana aonde disciplina é vazio;
- */
-
-//alterar nome do find disciplinaFase para FaseDisciplina
 @RestController
 @RequestMapping("/api/agendaprofessor")
 public class AgendaProfessorController {

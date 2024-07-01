@@ -1,15 +1,7 @@
 package com.projetotcs.tcsbackend.model;
 
-
 import jakarta.persistence.*;
 
-
-/*
-A agenda professor deve ser preenchida da seguinte forma:
-
-No cadastro de professor:  professor e dia;
-No cadastro de disciplina: disciplina e sala
- */
 @Entity
 @Table(name="agendaProfessor")
 public class AgendaProfessorModel {

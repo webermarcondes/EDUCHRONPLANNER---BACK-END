@@ -1,6 +1,5 @@
 package com.projetotcs.tcsbackend.controller;
 
-
 import com.projetotcs.tcsbackend.model.DiaExcecaoModel;
 import com.projetotcs.tcsbackend.services.DiaExcecaoService;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -10,10 +9,6 @@ import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
 
-/*
-Criar validação para evitar que seja cadastrado no banco um dia que já está persistido, ou que um registro
-Seja atualizado com dados de um dia que já está persistido;
- */
 @RestController
 @RequestMapping("/api/diaexcecao")
 public class DiaExcecaoController {

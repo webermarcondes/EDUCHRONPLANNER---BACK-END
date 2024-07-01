@@ -92,5 +92,21 @@ public class UsuarioService {
         return usuario;
     }
 
+    public UsuarioModel findByEmail(String email) {
+        UsuarioModel usuario = repository.findByEmail(email);
+        if (usuario == null) {
+            throw new ResourceNotFoundException("Não há registro de usuário com o email informado");
+        }
+        return usuario;
+    }
+
+    public UsuarioModel findBySenha(String senha) {
+        UsuarioModel usuario = repository.findBySenha(senha);
+        if (usuario == null) {
+            throw new ResourceNotFoundException("Não há registro de usuário com a senha informada");
+        }
+        return usuario;
+    }
+
 
 }

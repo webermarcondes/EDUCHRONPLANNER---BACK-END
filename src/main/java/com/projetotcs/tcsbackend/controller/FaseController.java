@@ -9,8 +9,6 @@ import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
 
-
-//Testar método get fases By Curso
 @RestController
 @RequestMapping("/api/fase")
 public class FaseController {

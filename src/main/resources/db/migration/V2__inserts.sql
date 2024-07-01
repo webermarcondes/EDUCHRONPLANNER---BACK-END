@@ -11,7 +11,11 @@ INSERT INTO dia_da_semana(id, descricao)
 INSERT INTO public.dia_excecao(id, data, motivo)
 	VALUES (1, '07/09/2024', 'Dia da Indepência do Brasil'),
 	       (2, '12/10/2024', 'Dia das Crianças e Nossa Senhora Aparecida'),
-	       (3, '02/11/2024', 'Finados');
+	       (3, '02/11/2024', 'Finados'),
+	       (4, '05/09/2024', 'Professor não vai'),
+	       (5, '20/08/2024', 'Eu não vou'),
+           (6, '16/08/2024', 'teste'),
+           (7, '11/10/2024', 'aniversário do meu cachorro');
 
 
 --- INSERTS NA TABELA DE PROFESSOR
@@ -38,15 +42,14 @@ INSERT INTO public.professor(
 --- INSERTS NA TABELA USUÁRIO
 INSERT INTO public.usuario(
 	id, cpf, email, nivel_permissao, nome, senha, status)
-	VALUES (1, '12345678911', 'em@il', 0, 'ADMIN', 'admin', 0),
-	       (2, '12345678901', 'em@iLL', 1, 'Lucas Rebelo', 'lcrb123', 0);
+	VALUES (1, '12345678911', 'adm123@gmail.com', 0, 'ADMIN', 'admin', 0),
+	       (2, '12345678901', 'lucas123@gmail.com', 1, 'Lucas Rebelo', 'lcrb123', 0);
 
 
 --- INSERTS NA TABELA DE CURSO
 INSERT INTO public.curso(
 	id, nome, qtde_fases, usuario_coord_id)
-	VALUES (1, 'Análise e desenvolvimento de sistemas', 5, 2),
-	       (2, 'Técnologia em Gestão da Informação', 4, 2);
+	VALUES (1, 'Análise e desenvolvimento de sistemas', 5, 2);
 
 --- INSERTS NA TABELA DE FASE
 INSERT INTO public.fase(
@@ -55,11 +58,7 @@ INSERT INTO public.fase(
 	       (2, 2, 1),
 	       (3, 3, 1),
 	       (4, 4, 1),
-	       (5, 5, 1),
-	       (6, 1, 2),
-           (7, 2, 2),
-           (8, 3, 2),
-           (9, 4, 2);
+	       (5, 5, 1);
 
 --- INSERTS NA TABELA DE DISCIPLINA
 INSERT INTO public.disciplina(
@@ -103,34 +102,34 @@ INSERT INTO public.disciplina(
 --- INSERTS NA TABELA DE AGENDAPROFESSOR
 INSERT INTO public.agenda_professor(
 	id, dia_da_semana_id, disciplina_id, professor_id)
-	VALUES (1, 1, 1, 1),
-	       (2, 2, 2, 2),
-	       (3, 3, 3, 3),
-	       (4, 4, 3, 3),
-	       (5, 5, 4, 4),
-	       (6, 5, 5, 5),
-	       (7, 1, 6, 6),
-	       (8, 2, 7, 3),
-	       (9, 2, 8, 7),
-	       (10, 3, 10, 8),
-	       (11, 4, 9, 2),
-	       (12, 5, 11, 9),
-	       (13, 1, 12, 10),
-	       (14, 2, 13, 8),
-	       (15, 2, 14, 6),
-	       (16, 3, 15, 11),
-	       (17, 4, 16, 8),
-	       (18, 5, 17, 1),
-	       (19, 1, 18, 9),
-	       (20, 2, 19, 10),
-	       (21, 3, 18, 9),
-	       (22, 4, 20, 7),
-	       (23, 5, 21, 12),
-	       (24, 5, 22, 13),
-	       (25, 1, 24, 12),
-	       (26, 1, 25, 4),
-	       (27, 2, 26, 15),
-	       (28, 3, 27, 16),
-	       (29, 4, 28, 11),
-	       (30, 5, 29, 11),
-	       (31, 5, 30, 13);
+	VALUES
+	       (1, 2, 2, 2),
+	       (2, 3, 3, 3),
+	       (3, 4, 3, 3),
+	       (4, 5, 4, 4),
+	       (5, 5, 5, 5),
+	       (6, 1, 6, 6),
+	       (7, 2, 7, 3),
+	       (8, 2, 8, 7),
+	       (9, 3, 10, 8),
+	       (10, 4, 9, 2),
+	       (11, 5, 11, 9),
+	       (12, 1, 12, 10),
+	       (13, 2, 13, 8),
+	       (14, 2, 14, 6),
+	       (15, 3, 15, 11),
+	       (16, 4, 16, 8),
+	       (17, 5, 17, 1),
+	       (18, 1, 18, 9),
+	       (19, 2, 19, 10),
+	       (20, 3, 18, 9),
+	       (21, 4, 20, 7),
+	       (22, 5, 21, 12),
+	       (23, 5, 22, 13),
+	       (24, 1, 24, 12),
+	       (25, 1, 25, 4),
+	       (26, 2, 26, 15),
+	       (27, 3, 27, 16),
+	       (28, 4, 28, 11),
+	       (29, 5, 29, 11),
+	       (30, 5, 30, 13);

@@ -12,11 +12,6 @@ import org.springframework.web.bind.annotation.*;
 
 import com.projetotcs.tcsbackend.services.ProfessorService;
 
-
-/*
-Fazer validação no update e no create para que não sejá possível cadastrar um usuário com um CPF
-que já está persistido, ou atualizar o CPF de um usuário para um que já está persistido
-*/
 @RestController
 @RequestMapping("/api/professor")
 public class ProfessorController {

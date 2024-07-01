@@ -21,7 +21,6 @@ public class ManipularExcel {
             InputStream inputStream = new FileInputStream(nomeArquivo);
             XSSFWorkbook workbook = new XSSFWorkbook(inputStream);
 
-            //Pega a primeira planilha do arquivo
             XSSFSheet sheet = workbook.getSheetAt(0);
 
             XSSFRow row = sheet.getRow(linha);
@@ -43,19 +42,14 @@ public class ManipularExcel {
 }
 
 
-    public static String preencherCelula(String nomeArquivo,
-                                int linha,
-                                int celula,
-                                CelulaExcel conteudoCelula) {
+    public static XSSFWorkbook preencherCelula(XSSFWorkbook workbook ,
+                                               int linha,
+                                               int celula,
+                                               CelulaExcel conteudoCelula) {
 
         XSSFRichTextString texto = new XSSFRichTextString(conteudoCelula.getConteudo());
 
-        try {
-            FileInputStream fis = new FileInputStream(nomeArquivo);
 
-            XSSFWorkbook workbook = new XSSFWorkbook(fis);
-
-            //Pega a primeira planilha do arquivo
             XSSFSheet sheet = workbook.getSheetAt(0);
 
             XSSFRow row = sheet.getRow(linha);
@@ -75,13 +69,6 @@ public class ManipularExcel {
             style.setBorderRight(BorderStyle.THIN);
 
             style.setAlignment(HorizontalAlignment.CENTER);
-            /*if(conteudoCelula.getAlinhamento().equals("CENTRALIZADO")) {
-                style.setAlignment(HorizontalAlignment.CENTER);
-            }
-            else if(conteudoCelula.getAlinhamento().equals("ESQUERDA")) {
-                style.setAlignment(HorizontalAlignment.LEFT);
-            }*/
-
 
             if (!conteudoCelula.getHexCorFundo().isEmpty()) {
 
@@ -121,24 +108,11 @@ public class ManipularExcel {
         cell.setCellValue(texto);
         cell.setCellStyle(style);
 
-        fis.close();
-        try (FileOutputStream fos = new FileOutputStream(nomeArquivo)) {
-            workbook.write(fos);
-        }
-
-
-    }
-
-    catch (FileNotFoundException e) {
-        throw new RuntimeException(e);
-    } catch (IOException e) {
-        throw new RuntimeException(e);
-    }
-
-    return "Conteudo escrito com sucesso";
+    return workbook;
 }
 
-public static String preencherCelulas(String nomeArquivo,
+
+public static XSSFWorkbook preencherCelulas(XSSFWorkbook workbook,
                                        Integer linha,
                                        Integer primeiraCelula,
                                        List<CelulaExcel> conteudos) {
@@ -146,12 +120,12 @@ public static String preencherCelulas(String nomeArquivo,
 
         int numCelula = primeiraCelula;
         for(CelulaExcel conteudoCelula: conteudos) {
-            preencherCelula(nomeArquivo, linha, numCelula, conteudoCelula);
+            preencherCelula(workbook, linha, numCelula, conteudoCelula);
 
             numCelula += 1;
         }
 
-    return "Células preenchidas";
+    return workbook;
 }
 
     public static XSSFColor CorHexToRgb(XSSFWorkbook workbook, String codCorHexadecimal) {
@@ -164,8 +138,7 @@ public static String preencherCelulas(String nomeArquivo,
 
     }
 
-
-    public static void preencherDias(String nomeArquivo,
+    public static XSSFWorkbook preencherDias(XSSFWorkbook workbook,
                                              int linha,
                                              int primeiraCelula,
                                              List<String> meses,
@@ -176,6 +149,7 @@ public static String preencherCelulas(String nomeArquivo,
                                              ) {
 
 
+
         SimpleDateFormat formato = new SimpleDateFormat("dd/MM/yyyy");
         int valorDiaLido = 0;
         int numMes = 0;
@@ -184,11 +158,7 @@ public static String preencherCelulas(String nomeArquivo,
 
 
         try {
-            FileInputStream fis = new FileInputStream(nomeArquivo);
 
-            XSSFWorkbook workbook = new XSSFWorkbook(fis);
-
-            //Pega a primeira planilha do arquivo
             XSSFSheet sheet = workbook.getSheetAt(0);
 
             XSSFRow row = sheet.getRow(linha);
@@ -241,14 +211,13 @@ public static String preencherCelulas(String nomeArquivo,
                             style.setBorderLeft(BorderStyle.THICK);
                             style.setBorderRight(BorderStyle.THICK);
 
-                            //style.setFont(font);
                         }
 
-                        else {
 
-                            if (formato.parse(dia).after(formato.parse(diaFim))) {
-                                return;
-                            } else if (formato.parse(dia).equals(formato.parse(diaFim))) {
+
+                        if (formato.parse(dia).after(formato.parse(diaFim))) {
+                                break;
+                        } else if (formato.parse(dia).equals(formato.parse(diaFim))) {
                                 qtdeDiasAulaPreenchidos += 1;
                                 color = CorHexToRgb(workbook, "#Ff4040");
                                 isDiaFinal = true;
@@ -258,18 +227,15 @@ public static String preencherCelulas(String nomeArquivo,
                                 style.setBorderLeft(BorderStyle.THICK);
                                 style.setBorderRight(BorderStyle.THICK);
 
-                                //style.setFont(font);
-                            }
                         }
 
 
                         for(DiaExcecaoModel diaExcecao: diasExcecao) {
 
                             if(formato.parse(diaExcecao.getData()).equals(formato.parse(dia))) {
+                                System.out.print("A" + diaExcecao.getData());
                                 color = CorHexToRgb(workbook,"#FFFF00");
-                                diasExcecao.remove(diaExcecao);
                                 IsdiaExcecao = true;
-                                //style.setFont(font);
 
                                 style.setBorderTop(BorderStyle.THICK);
                                 style.setBorderBottom(BorderStyle.THICK);
@@ -306,10 +272,6 @@ public static String preencherCelulas(String nomeArquivo,
 
                         cell.setCellStyle(style);
 
-                        fis.close();
-                        try (FileOutputStream fos = new FileOutputStream(nomeArquivo)) {
-                            workbook.write(fos);
-                        }
                     }
 
                     diaAnteriorLido = valorDiaLido;
@@ -319,14 +281,11 @@ public static String preencherCelulas(String nomeArquivo,
             }
 
 
-        } catch (FileNotFoundException e) {
-            throw new RuntimeException(e);
-        } catch (IOException e) {
-            throw new RuntimeException(e);
         } catch (ParseException e) {
             throw new RuntimeException(e);
         }
 
+        return workbook;
     }
         public static List<String> lerCelulasMescladas (String nomeArquivo,
                                                         int linha,
@@ -350,8 +309,7 @@ public static String preencherCelulas(String nomeArquivo,
                     CellRangeAddress region = sheet.getMergedRegion(i);
 
                     if (region.isInRange(linha, celula)) {
-                        conteudoCelulas.add(sheet.getRow(region.getFirstRow()).getCell(region.getFirstColumn()).getStringCellValue()); //Conteudo da celula mesclada
-                        celula += region.getNumberOfCells(); //Incrementa o valor de celula, com a quantidade das celulas que formam a celula mesclada
+                        conteudoCelulas.add(sheet.getRow(region.getFirstRow()).getCell(region.getFirstColumn()).getStringCellValue());
                         qtdeCelulaslidas += 1;
 
                         break;

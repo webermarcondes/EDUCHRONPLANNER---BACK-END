@@ -1,6 +1,5 @@
 package com.projetotcs.tcsbackend.controller;
 
-
 import com.projetotcs.tcsbackend.exceptions.StatusInativoException;
 import com.projetotcs.tcsbackend.model.UsuarioModel;
 import com.projetotcs.tcsbackend.services.UsuarioService;
@@ -11,10 +10,7 @@ import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
 
-/*
-Fazer validação no update e no create para que não sejá possível cadastrar um usuário com um CPF
-que já está persistido, ou atualizar o CPF de um usuário para um que já está persistido;
- */
+
 @RestController
 @RequestMapping("/api/usuario")
 public class UsuarioController {
@@ -49,12 +45,21 @@ public class UsuarioController {
         return service.update(usuario, id);
     }
 
-    //Método pra desativar ou ativar  o Usuário
     @PatchMapping(value="/atualizarstatus/{id}")
     public UsuarioModel updateUsuarioStatus(@PathVariable(value="id") Long id, @RequestBody String status) {
 
         return service.updateUsuarioStatus(id, status);
 
+    }
+
+    @PostMapping("/login/")
+    public ResponseEntity<String> login(@RequestBody UsuarioModel usuario) {
+        UsuarioModel existingUser = service.findByEmail(usuario.getEmail());
+        if (existingUser != null && existingUser.getSenha().equals(usuario.getSenha())) {
+            return ResponseEntity.ok("Usuario Logado com sucesso!");
+        } else {
+            return ResponseEntity.status(HttpStatus.UNAUTHORIZED).body("Email ou senha invalidos");
+        }
     }
 
 

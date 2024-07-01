@@ -41,10 +41,4 @@ public class DiaExcecaoModel {
         this.motivo = motivo;
     }
 
-    @Override
-    public String toString() {
-        return "DiaExcecaoModel{" +
-                "data='" + data + '\'' +
-                '}';
-    }
 }
