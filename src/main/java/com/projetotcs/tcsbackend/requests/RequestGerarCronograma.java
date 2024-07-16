@@ -1,12 +1,11 @@
 package com.projetotcs.tcsbackend.requests;
 
 
+public class RequestGerarCronograma {
 
-public class reqGerarCronograma {
-
-    String nomeCurso;
-    String dataInicio;
-    String dataFim;
+    private String nomeCurso;
+    private String dataInicio;
+    private String dataFim;
 
     public String getNomeCurso() {
         return nomeCurso;

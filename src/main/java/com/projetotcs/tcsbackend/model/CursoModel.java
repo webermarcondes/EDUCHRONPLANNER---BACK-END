@@ -1,10 +1,9 @@
 package com.projetotcs.tcsbackend.model;
 
-
 import com.fasterxml.jackson.annotation.JsonIgnore;
 import jakarta.persistence.*;
-
 import java.util.List;
+
 
 @Entity
 @Table(name="curso")
@@ -26,7 +25,7 @@ public class CursoModel {
     private List<FaseModel> fases;
 
     @Column
-    private Integer qtdeFases;
+    private Integer quantidadeDeFases;
 
 
     public Long getId() {
@@ -45,12 +44,12 @@ public class CursoModel {
         this.nome = nome;
     }
 
-    public Integer getQtdeFases() {
-        return qtdeFases;
+    public Integer getQuantidadeDeFases() {
+        return quantidadeDeFases;
     }
 
-    public void setQtdeFases(Integer qtdeFases) {
-        this.qtdeFases = qtdeFases;
+    public void setQuantidadeDeFases(Integer quantidadeDeFases) {
+        this.quantidadeDeFases = quantidadeDeFases;
     }
 
     public UsuarioModel getUsuarioCoordenador() {

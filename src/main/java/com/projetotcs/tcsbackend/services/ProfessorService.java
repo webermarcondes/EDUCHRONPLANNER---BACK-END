@@ -1,6 +1,5 @@
 package com.projetotcs.tcsbackend.services;
 
-
 import java.util.List;
 
 import com.projetotcs.tcsbackend.enums.Status;
@@ -9,14 +8,13 @@ import org.json.JSONObject;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.rest.webmvc.ResourceNotFoundException;
 import org.springframework.stereotype.Service;
-
 import com.projetotcs.tcsbackend.model.ProfessorModel;
 import com.projetotcs.tcsbackend.repository.ProfessorRepository;
 
 
 @Service
 public class ProfessorService {
- 
+
     @Autowired
     ProfessorRepository repository;
 
@@ -24,7 +22,7 @@ public class ProfessorService {
 
         List<ProfessorModel> professores = repository.findAll();
 
-        if(professores.isEmpty()) {
+        if (professores.isEmpty()) {
             throw new ResourceNotFoundException("Não há professores cadastrados");
         }
 
@@ -42,7 +40,7 @@ public class ProfessorService {
 
         ProfessorModel professor = repository.findByCpf(jsonString.getString("cpf"));
 
-        if(professor == null) {
+        if (professor == null) {
             throw new ResourceNotFoundException("Não há professor cadastrado com o CPF informado");
         }
 
@@ -60,13 +58,13 @@ public class ProfessorService {
     public ProfessorModel update(ProfessorModel professor, Long id) throws StatusInativoException {
 
         var entity = repository.findById(id)
-        .orElseThrow(() -> new ResourceNotFoundException("Não há registro de professor com o ID informado para atualizar informações"));
+                .orElseThrow(() -> new ResourceNotFoundException("Não há registro de professor com o ID informado para atualizar informações"));
 
 
-        if(entity.getStatus() == Status.ATIVO) {
+        if (entity.getStatus() == Status.ATIVO) {
             entity.setNomeCompleto(professor.getNomeCompleto());
             entity.setTelefone(professor.getTelefone());
-            entity.setQtdeDiasDeAula(professor.getQtdeDiasDeAula());
+            entity.setQuantidadeDeDiasDeAula(professor.getQuantidadeDeDiasDeAula());
             entity.setCpf(professor.getCpf());
 
             repository.save(entity);
@@ -86,8 +84,7 @@ public class ProfessorService {
 
         if (jsonString.getString("status").equals("ATIVO")) {
             professor.setStatus(Status.ATIVO);
-        }
-        else {
+        } else {
             professor.setStatus(Status.INATIVO);
         }
 

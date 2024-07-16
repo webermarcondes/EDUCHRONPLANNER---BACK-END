@@ -1,6 +1,5 @@
 package com.projetotcs.tcsbackend.services;
 
-
 import com.projetotcs.tcsbackend.model.CursoModel;
 import com.projetotcs.tcsbackend.repository.CursoRepository;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -16,10 +15,10 @@ public class CursoService {
     @Autowired
     CursoRepository repository;
 
-    public List<CursoModel> findAll(){
+    public List<CursoModel> findAll() {
         List<CursoModel> cursos = repository.findAll();
 
-        if(cursos.isEmpty()) {
+        if (cursos.isEmpty()) {
             throw new ResourceNotFoundException("Não há cursos cadastrados");
         }
 
@@ -46,7 +45,7 @@ public class CursoService {
         var entity = repository.findById(id).orElseThrow(() -> new ResourceNotFoundException("Não há registro de curso com o ID informado para atualizar informações"));
 
         entity.setNome(curso.getNome());
-        entity.setQtdeFases(curso.getQtdeFases());
+        entity.setQuantidadeDeFases(curso.getQuantidadeDeFases());
         entity.setUsuarioCoordenador(curso.getUsuarioCoordenador());
 
         repository.save(entity);

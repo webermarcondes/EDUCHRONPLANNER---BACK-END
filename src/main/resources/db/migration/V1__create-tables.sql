@@ -6,12 +6,10 @@ CREATE TABLE IF NOT EXISTS public.dia_da_semana
     descricao character varying(255) COLLATE pg_catalog."default",
     CONSTRAINT dia_da_semana_pkey PRIMARY KEY (id)
 )
-
 TABLESPACE pg_default;
 
 ALTER TABLE IF EXISTS public.dia_da_semana
     OWNER to postgres;
-
 
 
 -- Table: public.dia_excecao
@@ -23,11 +21,11 @@ CREATE TABLE IF NOT EXISTS public.dia_excecao
     motivo character varying(255) COLLATE pg_catalog."default",
     CONSTRAINT dia_excecao_pkey PRIMARY KEY (id)
 )
-
 TABLESPACE pg_default;
 
 ALTER TABLE IF EXISTS public.dia_excecao
     OWNER to postgres;
+
 
 -- Table: public.professor
 -- DROP TABLE IF EXISTS public.professor;
@@ -36,19 +34,17 @@ CREATE TABLE IF NOT EXISTS public.professor
     id SERIAL NOT NULL,
     cpf character varying(11) COLLATE pg_catalog."default",
     nome_completo character varying(255) COLLATE pg_catalog."default" NOT NULL,
-    qtde_dias_de_aula integer,
+    quantidade_de_dias_de_aula integer,
     status smallint,
     telefone character varying(255) COLLATE pg_catalog."default",
     CONSTRAINT professor_pkey PRIMARY KEY (id),
     CONSTRAINT uk_pk1omryj5cud6uslkepgyfrca UNIQUE (cpf),
     CONSTRAINT professor_status_check CHECK (status >= 0 AND status <= 1)
 )
-
 TABLESPACE pg_default;
 
 ALTER TABLE IF EXISTS public.professor
     OWNER to postgres;
-
 
 
 -- Table: public.usuario
@@ -67,7 +63,6 @@ CREATE TABLE IF NOT EXISTS public.usuario
     CONSTRAINT usuario_nivel_permissao_check CHECK (nivel_permissao >= 0 AND nivel_permissao <= 1),
     CONSTRAINT usuario_status_check CHECK (status >= 0 AND status <= 1)
 )
-
 TABLESPACE pg_default;
 
 ALTER TABLE IF EXISTS public.usuario
@@ -80,7 +75,7 @@ CREATE TABLE IF NOT EXISTS public.curso
 (
     id SERIAL NOT NULL,
     nome character varying(255) COLLATE pg_catalog."default",
-    qtde_fases integer,
+    quantidade_de_fases integer,
     usuario_coord_id bigint,
     CONSTRAINT curso_pkey PRIMARY KEY (id),
     CONSTRAINT fk4xdafkryf5dr1qsm20ng5sqcw FOREIGN KEY (usuario_coord_id)
@@ -88,7 +83,6 @@ CREATE TABLE IF NOT EXISTS public.curso
         ON UPDATE NO ACTION
         ON DELETE NO ACTION
 )
-
 TABLESPACE pg_default;
 
 ALTER TABLE IF EXISTS public.curso
@@ -108,7 +102,6 @@ CREATE TABLE IF NOT EXISTS public.fase
         ON UPDATE NO ACTION
         ON DELETE NO ACTION
 )
-
 TABLESPACE pg_default;
 
 ALTER TABLE IF EXISTS public.fase
@@ -130,7 +123,6 @@ CREATE TABLE IF NOT EXISTS public.disciplina
         ON UPDATE NO ACTION
         ON DELETE NO ACTION
 )
-
 TABLESPACE pg_default;
 
 ALTER TABLE IF EXISTS public.disciplina
@@ -158,7 +150,6 @@ CREATE TABLE IF NOT EXISTS public.agenda_professor
         ON UPDATE NO ACTION
         ON DELETE NO ACTION
 )
-
 TABLESPACE pg_default;
 
 ALTER TABLE IF EXISTS public.agenda_professor

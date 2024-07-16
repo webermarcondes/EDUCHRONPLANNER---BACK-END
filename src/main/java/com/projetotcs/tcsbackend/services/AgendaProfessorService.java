@@ -1,6 +1,5 @@
 package com.projetotcs.tcsbackend.services;
 
-
 import com.projetotcs.tcsbackend.model.AgendaProfessorModel;
 import com.projetotcs.tcsbackend.model.FaseModel;
 import com.projetotcs.tcsbackend.repository.AgendaProfessorRepository;
@@ -16,9 +15,9 @@ public class AgendaProfessorService {
     @Autowired
     AgendaProfessorRepository repository;
 
-    public List<AgendaProfessorModel> findAll(){
+    public List<AgendaProfessorModel> findAll() {
 
-        List<AgendaProfessorModel> agendaProfessores =  repository.findAll();
+        List<AgendaProfessorModel> agendaProfessores = repository.findAll();
 
         if (agendaProfessores.isEmpty()) {
             throw new ResourceNotFoundException("A agenda de professores está vazia.");

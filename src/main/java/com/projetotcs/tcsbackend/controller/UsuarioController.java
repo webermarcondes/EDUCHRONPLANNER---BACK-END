@@ -7,7 +7,6 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
-
 import java.util.List;
 
 
@@ -19,40 +18,40 @@ public class UsuarioController {
     UsuarioService service;
 
 
-    @GetMapping(value="/")
+    @GetMapping(value="/get-usuarios")
     public List<UsuarioModel> getUsuarios() {
         return service.findAll();
     }
 
-    @GetMapping(value="/{id}")
+    @GetMapping(value="/get-usuario/{id}")
     public UsuarioModel getUsuarioById(@PathVariable(value="id") Long id) {
         return service.findById(id);
     }
 
-    @GetMapping(value="/buscaporcpf/")
+    @GetMapping(value="/get-usuario-by-cpf")
     public UsuarioModel getUsuarioByCpf(@RequestBody String cpf) {
         return service.findByCpf(cpf);
     }
 
-    @PostMapping(value="/")
+    @PostMapping(value="/create-usuario")
     public ResponseEntity<UsuarioModel> createUsuario(@RequestBody UsuarioModel usuario) {
 
         return new ResponseEntity<>(service.create(usuario), HttpStatus.CREATED);
     }
 
-    @PutMapping(value="/{id}")
+    @PutMapping(value="/update-usuario/{id}")
     public UsuarioModel updateUsuario(@RequestBody UsuarioModel usuario, @PathVariable(value="id") Long id) throws StatusInativoException {
         return service.update(usuario, id);
     }
 
-    @PatchMapping(value="/atualizarstatus/{id}")
+    @PatchMapping(value="/update-usuario-status/{id}")
     public UsuarioModel updateUsuarioStatus(@PathVariable(value="id") Long id, @RequestBody String status) {
 
         return service.updateUsuarioStatus(id, status);
 
     }
 
-    @PostMapping("/login/")
+    @PostMapping("/login")
     public ResponseEntity<String> login(@RequestBody UsuarioModel usuario) {
         UsuarioModel existingUser = service.findByEmail(usuario.getEmail());
         if (existingUser != null && existingUser.getSenha().equals(usuario.getSenha())) {
@@ -61,6 +60,4 @@ public class UsuarioController {
             return ResponseEntity.status(HttpStatus.UNAUTHORIZED).body("Email ou senha invalidos");
         }
     }
-
-
 }

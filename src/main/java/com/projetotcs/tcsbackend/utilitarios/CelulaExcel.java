@@ -6,25 +6,25 @@ import java.util.List;
 public class CelulaExcel {
 
     private String conteudo;
-    private String hexCorFundo;
-    private List<String> hexsCoresFonte;
+    private String codigoHexadecimalCorFundo;
+    private List<String> codigosHexadecimaisCorFonte;
     private String alinhamento;
 
-    public CelulaExcel(String conteudo, String hexCorFundo) {
+    public CelulaExcel(String conteudo, String codigoHexadecimalCorFundo) {
         this.conteudo = conteudo;
-        this.hexCorFundo = hexCorFundo;
-        this.hexsCoresFonte = new ArrayList<>();
+        this.codigoHexadecimalCorFundo = codigoHexadecimalCorFundo;
+        this.codigosHexadecimaisCorFonte = new ArrayList<>();
     }
 
     public CelulaExcel(String conteudo) {
         this.conteudo = conteudo;
-        this.hexsCoresFonte = new ArrayList<String>();
-        this.hexCorFundo = "";
+        this.codigosHexadecimaisCorFonte = new ArrayList<String>();
+        this.codigoHexadecimalCorFundo = "";
     }
 
-    public CelulaExcel(String conteudo, String hexCorFundo, String alinhamento) {
+    public CelulaExcel(String conteudo, String codigoHexadecimalCorFundo, String alinhamento) {
         this.conteudo = conteudo;
-        this.hexCorFundo = hexCorFundo;
+        this.codigoHexadecimalCorFundo = codigoHexadecimalCorFundo;
         this.alinhamento = alinhamento;
     }
 
@@ -36,24 +36,24 @@ public class CelulaExcel {
         this.conteudo = conteudo;
     }
 
-    public String getHexCorFundo() {
-        return hexCorFundo;
+    public String getCodigoHexadecimalCorFundo() {
+        return codigoHexadecimalCorFundo;
     }
 
-    public void setHexCorFundo(String hexCorFundo) {
-        this.hexCorFundo = hexCorFundo;
+    public void setCodigoHexadecimalCorFundo(String codigoHexadecimalCorFundo) {
+        this.codigoHexadecimalCorFundo = codigoHexadecimalCorFundo;
     }
 
-    public List<String> getHexsCoresFonte() {
-        return hexsCoresFonte;
+    public List<String> getCodigosHexadecimaisCorFonte() {
+        return codigosHexadecimaisCorFonte;
     }
 
-    public void setHexsCoresFonte(List<String> hexsCoresFonte) {
-        this.hexsCoresFonte = hexsCoresFonte;
+    public void setCodigosHexadecimaisCorFonte(List<String> codigosHexadecimaisCorFonte) {
+        this.codigosHexadecimaisCorFonte = codigosHexadecimaisCorFonte;
     }
 
     public void setHexCorFonte(String hexCorFonte) {
-        this.hexsCoresFonte.add(hexCorFonte);
+        this.codigosHexadecimaisCorFonte.add(hexCorFonte);
     }
 
     public String getAlinhamento() {

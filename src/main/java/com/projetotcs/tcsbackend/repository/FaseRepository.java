@@ -9,6 +9,5 @@ import java.util.List;
 public interface FaseRepository extends JpaRepository<FaseModel, Long> {
 
     FaseModel findByNumero(Integer numeroFase);
-
     List<FaseModel> getFasesByCurso(CursoModel cursoModel);
 }

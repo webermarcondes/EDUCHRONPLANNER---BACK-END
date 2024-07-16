@@ -1,12 +1,10 @@
 package com.projetotcs.tcsbackend.services;
 
-
 import com.projetotcs.tcsbackend.model.DiaExcecaoModel;
 import com.projetotcs.tcsbackend.repository.DiaExcecaoRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.rest.webmvc.ResourceNotFoundException;
 import org.springframework.stereotype.Service;
-
 import java.util.List;
 
 @Service

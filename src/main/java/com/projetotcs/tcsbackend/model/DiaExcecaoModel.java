@@ -1,7 +1,7 @@
 package com.projetotcs.tcsbackend.model;
 
-
 import jakarta.persistence.*;
+
 
 @Entity
 @Table(name="diaExcecao")

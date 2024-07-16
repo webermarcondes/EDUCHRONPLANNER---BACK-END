@@ -1,6 +1,5 @@
 package com.projetotcs.tcsbackend.exceptions.handler;
 
-
 import com.projetotcs.tcsbackend.exceptions.StatusInativoException;
 import com.projetotcs.tcsbackend.exceptions.message.CustomExceptionMessage;
 import org.springframework.dao.DataIntegrityViolationException;
@@ -25,7 +24,6 @@ public class CustomExceptionHandler extends ResponseEntityExceptionHandler {
                 exception.getMessage(),
                 request.getDescription(false));
 
-
         return ResponseEntity.status(HttpStatus.NOT_FOUND).body(customExceptionMessage);
     }
 
@@ -46,9 +44,6 @@ public class CustomExceptionHandler extends ResponseEntityExceptionHandler {
                                                         exception.getMessage(),
                                                         request.getDescription(false));
 
-
-
         return ResponseEntity.status(HttpStatus.UNPROCESSABLE_ENTITY).body(customExceptionMessage);
     }
-
 }

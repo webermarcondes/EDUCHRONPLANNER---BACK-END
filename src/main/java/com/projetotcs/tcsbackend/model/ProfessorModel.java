@@ -1,8 +1,6 @@
 package com.projetotcs.tcsbackend.model;
 
-
 import com.projetotcs.tcsbackend.enums.Status;
-
 import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
 import jakarta.persistence.GeneratedValue;
@@ -29,7 +27,7 @@ public class ProfessorModel {
     private String cpf;
 
     @Column()
-    private Integer qtdeDiasDeAula;
+    private Integer quantidadeDeDiasDeAula;
 
 
     @Column()
@@ -61,11 +59,11 @@ public class ProfessorModel {
     }
 
 
-    public Integer getQtdeDiasDeAula() {
-        return qtdeDiasDeAula;
+    public Integer getQuantidadeDeDiasDeAula() {
+        return quantidadeDeDiasDeAula;
     }
-    public void setQtdeDiasDeAula(Integer qtdeDiasDeAula) {
-        this.qtdeDiasDeAula = qtdeDiasDeAula;
+    public void setQuantidadeDeDiasDeAula(Integer quantidadeDeDiasDeAula) {
+        this.quantidadeDeDiasDeAula = quantidadeDeDiasDeAula;
     }
 
 

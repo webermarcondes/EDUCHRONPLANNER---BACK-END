@@ -20,7 +20,7 @@ INSERT INTO public.dia_excecao(id, data, motivo)
 
 --- INSERTS NA TABELA DE PROFESSOR
 INSERT INTO public.professor(
-	id, cpf, nome_completo, qtde_dias_de_aula, status, telefone)
+	id, cpf, nome_completo, quantidade_de_dias_de_aula, status, telefone)
 	VALUES (1, '12345678900', 'Jorge Henrique da Silva Naspoli', 2, 0, '48996212844'),
 	       (2, '12345688901', 'Marcelo Mazon', 2, 0, '48996212954'),
 	       (3, '12345678902', 'Christine Vieira', 3, 0, '48996212844'),
@@ -48,8 +48,9 @@ INSERT INTO public.usuario(
 
 --- INSERTS NA TABELA DE CURSO
 INSERT INTO public.curso(
-	id, nome, qtde_fases, usuario_coord_id)
+	id, nome, quantidade_de_fases, usuario_coord_id)
 	VALUES (1, 'Análise e desenvolvimento de sistemas', 5, 2);
+
 
 --- INSERTS NA TABELA DE FASE
 INSERT INTO public.fase(
@@ -59,6 +60,7 @@ INSERT INTO public.fase(
 	       (3, 3, 1),
 	       (4, 4, 1),
 	       (5, 5, 1);
+
 
 --- INSERTS NA TABELA DE DISCIPLINA
 INSERT INTO public.disciplina(
@@ -93,10 +95,6 @@ INSERT INTO public.disciplina(
 	       (28, 76, '#6A5ACD', 'Desenvolvimento para dispositivos móveis', 5),
 	       (29, 40, '#20B2AA', 'Desenvolvimento de aplicação(Sistema)', 5),
 	       (30, 36, '#32CD32', 'Certificações em ADS', 5);
-
-
-
-
 
 
 --- INSERTS NA TABELA DE AGENDAPROFESSOR

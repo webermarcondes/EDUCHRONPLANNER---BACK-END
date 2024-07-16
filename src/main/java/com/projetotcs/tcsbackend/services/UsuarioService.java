@@ -1,6 +1,5 @@
 package com.projetotcs.tcsbackend.services;
 
-
 import com.projetotcs.tcsbackend.enums.Status;
 import com.projetotcs.tcsbackend.exceptions.StatusInativoException;
 import com.projetotcs.tcsbackend.model.UsuarioModel;
@@ -9,8 +8,8 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.rest.webmvc.ResourceNotFoundException;
 import org.springframework.stereotype.Service;
 import org.json.JSONObject;
-
 import java.util.List;
+
 
 @Service
 public class UsuarioService {
@@ -107,6 +106,4 @@ public class UsuarioService {
         }
         return usuario;
     }
-
-
 }

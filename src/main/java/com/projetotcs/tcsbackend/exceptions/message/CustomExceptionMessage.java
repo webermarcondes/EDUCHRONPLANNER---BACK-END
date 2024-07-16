@@ -8,15 +8,10 @@ public class CustomExceptionMessage {
     private String message;
     private String uri;
 
-
-
-
     public CustomExceptionMessage(HttpStatus httpStatus, String message, String uri) {
         this.httpStatus = httpStatus;
         this.message = message;
         this.uri = uri.split("=")[1];
-
-
     }
 
     public HttpStatus getHttpStatus() {

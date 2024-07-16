@@ -1,12 +1,11 @@
 package com.projetotcs.tcsbackend.model;
 
-
 import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.projetotcs.tcsbackend.enums.NivelPermissao;
 import com.projetotcs.tcsbackend.enums.Status;
 import jakarta.persistence.*;
-
 import java.util.List;
+
 
 @Entity
 @Table(name="usuario")
